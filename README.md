@@ -1,2 +1,14 @@
 # Drifting-Books
-APP
+
+The course design APP, a book floating and lending tool, aims to share books.
+
+## Preview
+
+## Development Technology
+
+## Details
+
+## Summary
+
+
+
