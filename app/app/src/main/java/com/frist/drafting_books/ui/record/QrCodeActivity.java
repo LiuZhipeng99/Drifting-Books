@@ -22,6 +22,7 @@ public class QrCodeActivity extends AppCompatActivity implements  DecoratedBarco
 
         decoratedBarcodeView=this.findViewById(R.id.decoratedBarcodeView);
         //重要代码，初始化捕获
+
         captureManager = new CaptureManager(this, decoratedBarcodeView);
         captureManager.initializeFromIntent(getIntent(), savedInstanceState);
         captureManager.decode();
@@ -53,7 +54,9 @@ public class QrCodeActivity extends AppCompatActivity implements  DecoratedBarco
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        System.out.println("!!!!!!!!!!fffffffff!!!!!!!!!!");
         captureManager.onDestroy();
+
     }
 
     @Override

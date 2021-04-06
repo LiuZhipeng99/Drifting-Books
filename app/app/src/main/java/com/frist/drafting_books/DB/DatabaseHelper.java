@@ -16,8 +16,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public String COL_2 = "username";
     public String COL_3 = "password";
     public String COL_4 = "marks";
-    //--||username|password|nickname|booksID||--
-    //--||booksID|book|
+
     public static final String CREATE_FRIEND = "create table if not exists friend("
             + "userid integer ,"
             + "friendid integer,"

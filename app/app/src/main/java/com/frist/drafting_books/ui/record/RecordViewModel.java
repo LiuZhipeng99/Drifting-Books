@@ -1,16 +1,16 @@
-package com.frist.drafting_books.ui.home;
+package com.frist.drafting_books.ui.record;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class HomeViewModel extends ViewModel {
+public class RecordViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public HomeViewModel() {
+    public RecordViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is home fragment!!!!!");
+        mText.setValue("This is record fragment");
     }
 
     public LiveData<String> getText() {
