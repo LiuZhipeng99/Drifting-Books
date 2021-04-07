@@ -5,20 +5,20 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@+id/navigation_home">
 
+    <fragment
+        android:id="@+id/navigation_community"
+        android:name="com.frist.drafting_books.ui.community.CommunityFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/test_qr_layout" />
 <!--    <fragment-->
 <!--        android:id="@+id/navigation_community"-->
-<!--        android:name="com.frist.drafting_books.ui.home.HomeFragment"-->
-<!--        android:label="@string/title_home"-->
-<!--        tools:layout="@layout/test_qr_layout" />-->
-    <activity
-        android:id="@+id/navigation_community"
-        android:name="com.frist.drafting_books.ui.record.TestQR"
-        android:label="test"/>
+<!--        android:name="com.frist.drafting_books.ui.record.TestQR"-->
+<!--        android:label="test"/>-->
     <fragment
         android:id="@+id/navigation_news"
         android:name="com.frist.drafting_books.ui.home.HomeFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_community" />
 
     <fragment
         android:id="@+id/navigation_record"
@@ -26,13 +26,13 @@
         android:label="录入结果"/>
 <!--        tools:layout="@layout/fragment_record" /> 原使用activity不能传回-->
     <fragment
-        android:id="@+id/message"
+        android:id="@+id/navigation_message"
         android:name="com.frist.drafting_books.ui.home.HomeFragment"
         android:label="消息"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_community" />
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.frist.drafting_books.ui.home.HomeFragment"
         android:label="我的书房"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_community" />
 </navigation>

@@ -15,7 +15,7 @@
         android:id="@+id/navigation_record"
         android:icon="@drawable/ic_record"
 
-        android:title="@string/title_dashboard"/>
+        android:title="@string/title_recored"/>
     <item
         android:id="@+id/navigation_message"
         android:icon="@drawable/ic_message"

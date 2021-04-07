@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".bookDetails">
+    <ScrollView
+        android:id="@+id/scrollview"
+        android:layout_above="@+id/borrow_Button"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+<!--            这个是头部。书的封面和书的信息-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="5dp"
+                android:paddingRight="10dp"
+                android:paddingTop="5dp"
+                android:paddingLeft="10dp"
+                android:background="#72020202">
+
+                <ImageView
+                    android:id="@+id/cover"
+                    android:layout_width="match_parent"
+                    android:layout_height="250sp"
+                    android:layout_weight="1.5"
+                    android:src="@drawable/renjianshige"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:paddingLeft="20dp"
+                    >
+                    <TextView
+                        android:id="@+id/title"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:paddingTop="20sp"
+                        android:text="人间失格"
+                        android:textSize="25dp"
+                        android:textColor="@color/white"
+
+                        />
+                    <TextView
+                        android:id="@+id/abstracts"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:textColor="@color/white"/>
+                </LinearLayout>
+            </LinearLayout>
+<!--            评分控件-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/rating_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="豆瓣评分:  "
+                    android:textSize="20dp"
+                    android:gravity="bottom"
+                    />
+                <RatingBar
+                    style="@android:style/Widget.Holo.RatingBar"
+                    android:id="@+id/ratingbar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:isIndicator="true"
+
+                    android:numStars="5"
+
+                    android:stepSize="0.5" />
+            </LinearLayout>
+
+<!--            这个是书籍的详情-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="#3C171616"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="内容简介"
+                    android:textSize="20dp"
+                    android:layout_margin="5dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="《人间失格》（又名《丧失为人的资格》）日本小说家太宰治创作的中篇小说，发表于1948年，是一部半自传体的小说。
+《人间失格》以“我”看到叶藏的三张照片后的感想开头，中间是叶藏的三篇手记，而三篇手记与照片对应，分别介绍了叶藏幼年、青年和壮年时代的经历，描述了叶藏是如何一步一步走向丧失为人资格的道路的。 [1]
+作品中太宰治巧妙地将自己的人生与思想，隐藏于主角叶藏的人生遭遇，藉由叶藏的独白，窥探太宰治的内心世界——“充满了可耻的一生”。在发表该作品的同年，太宰治自杀身亡。"/>
+            </LinearLayout>
+<!--           这个是作者简介-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="#3C171616"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="作者详情"
+                    android:textSize="20dp"
+                    android:layout_margin="5dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="《日本文学评论家奥野健男、正宗白鸟等认为《人间失格》是“塑造了不得不封闭在自己的世界里的人物形象的杰作”，小山清认为“如果要从太宰治的作品中选一篇的话，我选《人间失格》”，而柳田知常、大江健三郎等则认为这只不过是一部“令人不愉快的”、“自我陶醉”的作品等。 [1]"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+<!--    评论区-->
+
+<!--    下面是借阅与豆瓣的按钮-->
+    <LinearLayout
+        android:id="@+id/borrow_Button"
+        android:layout_width="match_parent"
+        android:layout_height="60sp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/doubanbutton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="豆瓣"
+            android:layout_weight="1"
+            />
+        <Button
+            android:id="@+id/commentButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="评论"
+            android:layout_weight="1"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="借阅"
+            android:layout_weight="1"/>
+    </LinearLayout>
+</RelativeLayout>

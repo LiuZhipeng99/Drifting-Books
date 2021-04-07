@@ -50,12 +50,14 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home,R.id.navigation_record)
+                R.id.navigation_home,R.id.navigation_record,R.id.navigation_community,R.id.navigation_message)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
+        //隐藏actionbar
+        getSupportActionBar().hide();
 
         //试验leancloud//init应该在进入的第一个函数函数db初始化时候？？？
         AVOSCloud.initialize(this, "GXBxsr19fKHJ9rSP9e3LdPAy-gzGzoHsz", "s94d7Tn2DpB7D2uuzprBqb9y", "https://imleancloud.lifelover.top");
@@ -76,11 +78,11 @@ public class MainActivity extends AppCompatActivity {
         dbt.Login("username1","password1");
 //        dbt.addBook("19787101052039");
 //        dbt.lentBook("606a82a27fa6c4403bc994a0");
-        ArrayList<Map<String,String>> res = dbt.showMyBooks();
-        System.out.println("res大小 "+res.size()); //返回res大小为0这是因为多线程不同步，show返回得过早了//前面都是void函数故不需要与当前线程同步
-        for(int i=0;i<res.size();i++){
-            System.out.println(res.get(i));
-        }
+        //ArrayList<Map<String,String>> res = dbt.showMyBooks();
+//        System.out.println("res大小 "+res.size()); //返回res大小为0这是因为多线程不同步，show返回得过早了//前面都是void函数故不需要与当前线程同步
+//        for(int i=0;i<res.size();i++){
+//            System.out.println(res.get(i));
+//        }
 //        System.out.println("pass"); login是新开了个线程//signup不会实例/login都能实例当前的User
     }
 
