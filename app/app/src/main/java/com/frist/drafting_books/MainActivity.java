@@ -1,20 +1,13 @@
 package com.frist.drafting_books;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.amap.api.location.AMapLocationClient;
-import com.amap.api.location.AMapLocationListener;
+import com.frist.drafting_books.DB.GetBookFromLean;
 import com.frist.drafting_books.DB.LeancloudDB;
-import com.frist.drafting_books.utils.HttpHelper;
+import com.frist.drafting_books.ui.login.LoginActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -26,25 +19,29 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 import cn.leancloud.AVOSCloud;
 import cn.leancloud.AVObject;
-import cn.leancloud.AVUser;
-import io.reactivex.Observer;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.disposables.Disposable;
 
 
 public class MainActivity extends AppCompatActivity {
 
+    @SuppressLint("StaticFieldLeak")
+    private static Context main_ctx;
+
+    public synchronized static Context getMain_ctx() { //不能设置为静态会内存泄漏/应不应该设定为synchronized
+        return main_ctx;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        main_ctx = getApplication();
+//        LeanConfig.initAVOSCloud(true); //改到DB的实例方法里（懒加载）
+//        先进入login
+        Intent logina = new Intent(this, LoginActivity.class);
+        startActivity(logina);
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -57,30 +54,43 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
 
 
-        //试验leancloud//init应该在进入的第一个函数函数db初始化时候？？？
-        AVOSCloud.initialize(this, "GXBxsr19fKHJ9rSP9e3LdPAy-gzGzoHsz", "s94d7Tn2DpB7D2uuzprBqb9y", "https://imleancloud.lifelover.top");
-// 构建对象
-        AVObject todo = new AVObject("Todo");
 
-// 为属性赋值
-        todo.put("title",   "工程师周会");
-        todo.put("content", "周二两点，全体成员");
 
-// 将对象保存到云端
-        todo.saveInBackground().subscribe();
 
+
+
+
+
+
+
+//todo volley test
+
+//        VolleyHelper vh = new VolleyHelper(this);
+//        vh.stringGETTEST();
+//        vh.jsonGETBOOK("9787101052039", new GetBookCallback() {
+//            @Override
+//            public void querySuccess(JSONObject bookJson) {
+//          //ok
+//            }
+//            @Override
+//            public void queryFail(Error e) {
+//            }
+//        });
 
 //todo unit test
+
         LeancloudDB dbt = LeancloudDB.getInstance();
-//        dbt.addUser("username1","password1");
-        dbt.Login("username1","password1");
-//        dbt.addBook("19787101052039");
-        dbt.returnBook("606a82a27fa6c4403bc994a0");
-        ArrayList<Map<String,String>> res = dbt.showMyBooks();
-        System.out.println("res大小 "+res.size()); //返回res大小为0这是因为多线程不同步，show返回得过早了//前面都是void函数故不需要与当前线程同步
-        for(int i=0;i<res.size();i++){
-            System.out.println(res.get(i));
-        }
+////        dbt.addUser("username1","password1");
+//        dbt.Login("username1","password1");
+//        dbt.addBook("9787101052039",getApplication());
+//        dbt.returnBook("606a82a27fa6c4403bc994a0");
+
+//        ArrayList<Map<String,String>> res = dbt.showMyBooks();
+        // return just 0, but database has 8 books
+//        System.out.println("res大小 "+res.size()); //返回res大小为0这是因为多线程不同步，show返回得过早了//前面都是void函数故不需要与当前线程同步
+//        for(int i=0;i<res.size();i++){
+//            System.out.println(res.get(i));
+//        }
 //        System.out.println("pass"); login是新开了个线程//signup不会实例/login都能实例当前的User
     }
 
