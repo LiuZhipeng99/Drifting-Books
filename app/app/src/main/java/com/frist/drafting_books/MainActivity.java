@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
 //        dbt.addUser("username1","password1");
         dbt.Login("username1","password1");
 //        dbt.addBook("19787101052039");
-//        dbt.lentBook("606a82a27fa6c4403bc994a0");
+        dbt.returnBook("606a82a27fa6c4403bc994a0");
         ArrayList<Map<String,String>> res = dbt.showMyBooks();
         System.out.println("res大小 "+res.size()); //返回res大小为0这是因为多线程不同步，show返回得过早了//前面都是void函数故不需要与当前线程同步
         for(int i=0;i<res.size();i++){
