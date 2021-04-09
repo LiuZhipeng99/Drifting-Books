@@ -50,7 +50,7 @@ public class LoginViewModel extends ViewModel {
 
             @Override
             public void Fail() {
-                loginResult.setValue(new LoginResult(R.string.login_failed));
+                loginResult.setValue(new LoginResult(222));
 //                dbt.addUser(username,password);
 //                login(username,password);
             }

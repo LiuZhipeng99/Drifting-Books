@@ -47,12 +47,14 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home,R.id.navigation_record)
+                R.id.navigation_home,R.id.navigation_record,R.id.navigation_community,R.id.navigation_message)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
+        //隐藏actionbar
+        getSupportActionBar().hide();
 
 
 
@@ -80,6 +82,11 @@ public class MainActivity extends AppCompatActivity {
 //todo unit test
 
         LeancloudDB dbt = LeancloudDB.getInstance();
+//        dbt.addUser("username1","password1");
+//        dbt.Login("username1","password1");
+//        dbt.addBook("19787101052039");
+//        dbt.lentBook("606a82a27fa6c4403bc994a0");
+        //ArrayList<Map<String,String>> res = dbt.showMyBooks();
 ////        dbt.addUser("username1","password1");
 //        dbt.Login("username1","password1");
 //        dbt.addBook("9787101052039",getApplication());

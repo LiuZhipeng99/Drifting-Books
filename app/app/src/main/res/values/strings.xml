@@ -2,7 +2,8 @@
     <string name="app_name">Drafting-books</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_recored">扫码</string>
+    <string name="title_notifications">我的</string>
     <string name="title_community">社区</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
