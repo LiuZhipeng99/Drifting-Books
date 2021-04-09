@@ -25,7 +25,7 @@ public class bookDetails extends AppCompatActivity {
         setContentView(R.layout.activity_book_details);
         Bundle bundle = new Bundle();
         bundle = getIntent().getExtras();
-        bookId = bundle.getString("bookId");
+        //bookId = bundle.getString("bookId");
 //        getSupportActionBar().hide();
 
         //左侧添加一个默认的返回图标

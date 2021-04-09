@@ -17,27 +17,14 @@
       <option name="url" value="https://jcenter.bintray.com/" />
     </remote-repository>
     <remote-repository>
-      <option name="id" value="Google" />
-      <option name="name" value="Google" />
-      <option name="url" value="https://dl.google.com/dl/android/maven2/" />
-    </remote-repository>
-    <remote-repository>
       <option name="id" value="maven" />
       <option name="name" value="maven" />
       <option name="url" value="https://jitpack.io" />
     </remote-repository>
-<<<<<<< HEAD
-=======
     <remote-repository>
-      <option name="id" value="maven" />
-      <option name="name" value="maven" />
-      <option name="url" value="https://maven.aliyun.com/repository/google" />
+      <option name="id" value="Google" />
+      <option name="name" value="Google" />
+      <option name="url" value="https://dl.google.com/dl/android/maven2/" />
     </remote-repository>
-    <remote-repository>
-      <option name="id" value="maven2" />
-      <option name="name" value="maven2" />
-      <option name="url" value="https://maven.aliyun.com/repository/jcenter" />
-    </remote-repository>
->>>>>>> 0fc07af250c6f01144e1a48081c90cd44f03a86a
   </component>
 </project>

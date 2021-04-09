@@ -40,6 +40,7 @@ public class LeancloudDB {
     private LeancloudDB(){
         LeanConfig.initAVOSCloud(true);
     }
+
     public synchronized static LeancloudDB getInstance(){
         if(db == null){
             db = new LeancloudDB();
@@ -195,7 +196,7 @@ public class LeancloudDB {
             public void onSubscribe(Disposable disposable) {}
             public void onNext(List<AVObject> arrs) {
                 // students 是包含满足条件的 Student 对象的数组
-                callback.querySuccess(arrs);
+                callback.querySuccess(arrs,arrs);
             }
             public void onError(Throwable throwable) {}
             public void onComplete() {}
