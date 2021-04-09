@@ -6,10 +6,14 @@ import androidx.lifecycle.ViewModel;
 
 import android.util.Patterns;
 
+import com.frist.drafting_books.DB.LeancloudDB;
+import com.frist.drafting_books.DB.LoginCallback;
 import com.frist.drafting_books.data.LoginRepository;
 import com.frist.drafting_books.data.Result;
 import com.frist.drafting_books.data.model.LoggedInUser;
 import com.frist.drafting_books.R;
+
+import cn.leancloud.AVUser;
 
 public class LoginViewModel extends ViewModel {
 
@@ -31,14 +35,36 @@ public class LoginViewModel extends ViewModel {
 
     public void login(String username, String password) {
         // can be launched in a separate asynchronous job
-        Result<LoggedInUser> result = loginRepository.login(username, password);
+        LeancloudDB dbt = LeancloudDB.getInstance();
+        dbt.Login(username, password, new LoginCallback() {
+            @Override
+            public void Success() {
+                LoggedInUser fakeUser =
+                        new LoggedInUser(
+                                AVUser.getCurrentUser().getObjectId(),
+                                username);
+                Result.Success<LoggedInUser> result = new Result.Success<>(fakeUser);
+                LoggedInUser data = ((Result.Success<LoggedInUser>) result).getData();
+                loginResult.setValue(new LoginResult(new LoggedInUserView(data.getDisplayName())));
+            }
 
-        if (result instanceof Result.Success) {
-            LoggedInUser data = ((Result.Success<LoggedInUser>) result).getData();
-            loginResult.setValue(new LoginResult(new LoggedInUserView(data.getDisplayName())));
-        } else {
-            loginResult.setValue(new LoginResult(R.string.login_failed));
-        }
+            @Override
+            public void Fail() {
+                loginResult.setValue(new LoginResult(222));
+//                dbt.addUser(username,password);
+//                login(username,password);
+            }
+        });
+
+
+//        Result<LoggedInUser> result = loginRepository.login(username, password);
+//
+//        if (result instanceof Result.Success) {
+//            LoggedInUser data = ((Result.Success<LoggedInUser>) result).getData();
+//            loginResult.setValue(new LoginResult(new LoggedInUserView(data.getDisplayName())));
+//        } else {
+//            loginResult.setValue(new LoginResult(R.string.login_failed));
+//        }
     }
 
     public void loginDataChanged(String username, String password) {

@@ -1,26 +1,27 @@
 package com.frist.drafting_books.DB;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
+import android.content.Intent;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.frist.drafting_books.utils.HttpHelper;
-import com.google.gson.Gson;
+import com.frist.drafting_books.MainActivity;
+import com.frist.drafting_books.R;
+import com.frist.drafting_books.ui.login.LoginActivity;
+import com.frist.drafting_books.utils.GetBookFromNetCallback;
+import com.frist.drafting_books.utils.VolleyHelper;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import cn.leancloud.AVObject;
 import cn.leancloud.AVQuery;
 import cn.leancloud.AVUser;
-import cn.leancloud.json.JSON;
-import cn.leancloud.json.JSONObject;
 import cn.leancloud.types.AVGeoPoint;
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
@@ -37,8 +38,7 @@ public class LeancloudDB {
     private final String tableBooks = "t_books";
     private final String defaultImageLink = "http://qiniu.lifelover.top/touxiang20210301170002.png";
     private LeancloudDB(){
-
-
+        LeanConfig.initAVOSCloud(true);
     }
     public synchronized static LeancloudDB getInstance(){
         if(db == null){
@@ -77,36 +77,31 @@ public class LeancloudDB {
         //todo 需要主线程开启定位服务
 //        return ids.get(0); 不需要通过在onnext赋值，最后检验一样的。除了本地保存id，user类自带会话系统，可以不用保存
     }
-    public void Login(String name,String password){
+    public void Login(String name,String password,LoginCallback callback){
         AVUser.logIn(name, password).subscribe(new Observer<AVUser>() {
             public void onSubscribe(Disposable disposable) {}
             public void onNext(AVUser user) {
                 // 登录成功
+                callback.Success();
                 System.out.println("Login:"+AVUser.getCurrentUser().getObjectId());
             }
             public void onError(Throwable throwable) {
-                // 登录失败（可能是密码错误）//todo 这里提示用户
+                // 登录失败（可能是密码错误）
+                callback.Fail();
             }
             public void onComplete() {}
         });
     }
     /**
     *@description
-     * 录入图书方法，添加到book表
+     * 录入图书方法，添加到book表，ctx是用来调用网络方法的
     *@author ZhipengLiu
      **/
-    public void addBook(String isbn){ //用了全局的userid
+    public void addBook(String isbn, Context ctx){ //用了全局的userid
         AVObject book = new AVObject(tableBooks);
         //用isbn获取书籍信息，向书表加行，
         book.put("isbn",isbn);
         book.put("is_lent",false);
-        //这里获取json
-//        JSONObject js = HttpHelper.asy_get(isbn);
-        JSON js = new JSON();
-        book.put("BookJson",js);
-        ArrayList<String> comments = new ArrayList<>();
-        comments.add("好耶!");
-        book.put("comments",comments);
         AVUser currentUser = AVUser.getCurrentUser();
         if (currentUser != null) {
             book.put("userId",AVUser.getCurrentUser().getObjectId());
@@ -115,22 +110,50 @@ public class LeancloudDB {
             Log.d("User","need sign");
             return;
         }
+        VolleyHelper vh = new VolleyHelper(ctx);
+        vh.jsonGETBOOK(isbn, new GetBookFromNetCallback() {
+            @Override
+            public void querySuccess(JSONObject bookJson) {
+                try {
+//                    bookJson = bookJson.getJSONObject("nameValuePairs");
+                    bookJson.remove("original_texts");
+                    bookJson.remove("catalog");
+                    bookJson.remove("create_time");
+                    Log.d("DB",bookJson.get("comments").toString());
+                    JSONArray cms = bookJson.getJSONArray("comments");
+//                    ArrayList<JSONObject> lists = new ArrayList<>();
+//                    for(int i=0;i<cms.length();i++){
+//                        lists.add(cms.getJSONObject(i));
+//                    }
+                    book.put("comments",bookJson.get("comments")); //白费功夫！！
+//                    book.put("commentstest",bookJson.getJSONArray("comments")); 和上面get效果一样
+//                    bookJson.remove("comments");
+                } catch (JSONException e) {
+                    Log.e("DB",e.toString());
+                }
+                book.put("book_json",bookJson);
+                submitBook(currentUser,book); //如果book的提交在这个函数外那么json不能提交上去。//这里接口get已经达到顶部，不需要继续call到调用add的函数
+            }
+            @Override
+            public void queryFail(Error e) {
+            }
+        });
+    }
+
+    private void submitBook(AVUser currentUser, @NotNull AVObject book) {
         book.saveInBackground().subscribe(new Observer<AVObject>() {
             @Override
             public void onSubscribe(@NonNull Disposable d) {
             }
-
             @Override
             public void onNext(@NonNull AVObject avObject) { //add之类的方法是给非数组类用也没啥发生。
-                currentUser.addUnique("bookId_list",avObject.getObjectId()); //这里保证了arr不会有重复的同一本书//但book无法保证，故book可能有ISBN和uerid都一样的书
+                currentUser.addUnique("booksId_list",avObject.getObjectId()); //这里保证了arr不会有重复的同一本书//但book无法保证，故book可能有ISBN和uerid都一样的书
                 currentUser.save(); //todo 这里其实不能保证因为书的id一定是唯一的，
             }
-
             @Override
             public void onError(@NonNull Throwable e) {
-                System.out.println("book上传失败！");
+               Log.e("DB",e.toString());
             }
-
             @Override
             public void onComplete() {
             }
@@ -148,35 +171,36 @@ public class LeancloudDB {
             currentUser.setUsername(name);
             currentUser.setPassword(password);
             currentUser.put("imageLink",imageLink);
-            currentUser.save();
+            currentUser.saveInBackground();
         } else {
             // 显示注册或登录页面
-            Log.d("User","need sign");
+            Log.d("DB","need sign");
         }
     }
     public void lentBook(String bookId){
         AVObject toChange = AVObject.createWithoutData(tableBooks, bookId);
         toChange.put("is_lent", true);
-        toChange.save();
+//        toChange.save();
+        toChange.saveInBackground();
     }
     public void returnBook(String bookId){
         AVObject toChange = AVObject.createWithoutData(tableBooks, bookId);
         toChange.put("is_lent", false);
-        toChange.save();
+//        toChange.save();
+        toChange.saveInBackground();
     }
-    public List<AVObject> showBooks(){//因为返回arraylist的元素map需要指定类型不如python的好使
-        final List<AVObject>[] res = new List[]{new ArrayList<>()};
+    public void showBooks(GetBookFromLean callback){//因为返回arraylist的元素map需要指定类型不如python的好使
         AVQuery<AVObject> query = new AVQuery<>(tableBooks);
         query.findInBackground().subscribe(new Observer<List<AVObject>>() {
             public void onSubscribe(Disposable disposable) {}
             public void onNext(List<AVObject> arrs) {
                 // students 是包含满足条件的 Student 对象的数组
-                res[0] = arrs;
+                callback.querySuccess(arrs);
             }
             public void onError(Throwable throwable) {}
             public void onComplete() {}
         });
-        return res[0]; //为什么需要改成数组没搞明白
+//        return res[0]; //为什么需要改成数组没搞明白
     }
     /**
     *@description
@@ -184,13 +208,16 @@ public class LeancloudDB {
     *@author ZhipengLiu
     *@created at 2021/4/5
      **/
-    public ArrayList<Map<String,String>> showMyBooks(){
+    public void showMyBooks(GetBookFromLean callback){
         //两种查询方法，一种是查询自身的arraylist，另一种是条件查询books,前者返回一列，后者返回一个包含所有满足条件的list//应该考虑返回给listview用的数组：每个book的map包含名字，
         AVUser currentUser = AVUser.getCurrentUser();
         ArrayList<String> booksId_list;
         if (currentUser == null) {
-            Log.d("User","cur is null");
+            Log.d("DB","curUser is null");
             //todo 登录
+//            Intent logina = new Intent(MainActivity.getMain_ctx(), LoginActivity.class);
+//            startActivity(logina);
+//            setContentView(R.layout.activity_main);
         }
         String curId = AVUser.getCurrentUser().getObjectId();
 //        booksId_list = (ArrayList<String>) currentUser.get("booksId_list");
@@ -201,22 +228,12 @@ public class LeancloudDB {
         query.findInBackground().subscribe(new Observer<List<AVObject>>() {
             public void onSubscribe(Disposable disposable) {}
             public void onNext(List<AVObject> arrs) {
-                // students 是包含满足条件的 Student 对象的数组
-                for(int i=0;i<arrs.size();i++){
-                    AVObject book = arrs.get(i);
-                    Map<String,String> mp = new HashMap<>();
-                    mp.put("title",book.getString("title"));
-                    mp.put("cover",book.getString("cover"));
-                    mp.put("id",book.getObjectId());
-                    res.add(mp);
-                }
-                System.out.println("查询结果的数组大小："+arrs.size());
+                callback.querySuccess(arrs);
             }
             public void onError(Throwable throwable) {}
             public void onComplete() {
-                System.out.println("这个complete会不会比res返回更先");
+                System.out.println("这个complete不会比res返回更先");
             }
         });
-        return res;
     }
 }
