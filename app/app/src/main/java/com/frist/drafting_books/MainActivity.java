@@ -8,8 +8,9 @@ import android.util.Log;
 import android.view.View;
 
 import com.frist.drafting_books.DB.LeancloudDB;
+import com.frist.drafting_books.DB.LoginCallback;
 import com.frist.drafting_books.ui.home.HomeFragment;
-import com.frist.drafting_books.ui.login_default.LoginActivity;
+import com.frist.drafting_books.ui.login.LoginActivity;
 import com.frist.drafting_books.ui.record.RecordFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -28,7 +29,7 @@ import androidx.navigation.ui.NavigationUI;
 
 
 public class MainActivity extends AppCompatActivity {
-
+    private MainActivity self;
     @SuppressLint("StaticFieldLeak")
     private static Context main_ctx;
 
@@ -42,33 +43,47 @@ public class MainActivity extends AppCompatActivity {
         main_ctx = getApplication();
 //        LeanConfig.initAVOSCloud(true); //改到DB的实例方法里（懒加载）
 //        先进入login
-        Intent logina = new Intent(this, LoginActivity.class);
-        startActivity(logina);
-        setContentView(R.layout.activity_main);
-//todo 这里直接进入login有个问题是返回就直接进入Main了
-        BottomNavigationView navView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home,R.id.navigation_record,R.id.navigation_community,R.id.navigation_message)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(navView, navController);
-
-        //隐藏actionbar
-        getSupportActionBar().hide();
-        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
+//        Intent logina = new Intent(this, LoginActivity.class);
+        Bundle login = getIntent().getExtras();
+        LeancloudDB dbt = LeancloudDB.getInstance();
+        //折磨 todo 看起来笨笨的操作
+        self = this;
+        dbt.Login(login.get("username").toString(), login.get("password").toString(), new LoginCallback() {
             @Override
-            public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
-                if(destination.getId() == R.id.navigation_message) {
-                    System.out.println("is message");
-                    navController.navigate(R.id.navigation_community);
-                } else {
-                    System.out.println("no message");
-                }
+            public void Success() {
+                //这里还需要传act但将就用静态方法也行//不行！/再写个回调方法 !回调函数只能底到高，这里不可能传上来
+                setContentView(R.layout.activity_main);
+                BottomNavigationView navView = findViewById(R.id.nav_view);
+                // Passing each menu ID as a set of Ids because each
+                // menu should be considered as top level destinations.
+                AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                        R.id.navigation_home,R.id.navigation_record,R.id.navigation_community,R.id.navigation_message)
+                        .build();
+                NavController navController = Navigation.findNavController(self, R.id.nav_host_fragment);
+                NavigationUI.setupActionBarWithNavController(self, navController, appBarConfiguration);
+                NavigationUI.setupWithNavController(navView, navController);
+
+                //隐藏actionbar
+                getSupportActionBar().hide();
+                navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
+                    @Override
+                    public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
+                        if(destination.getId() == R.id.navigation_message) {
+                            System.out.println("is message");
+                            navController.navigate(R.id.navigation_community);
+                        } else {
+                            System.out.println("no message");
+                        }
+                    }
+                });
+            }
+            @Override
+            public void Fail() {
+
             }
         });
+//todo 这里直接进入login有个问题是返回就直接进入Main了//
+
 
 
 
@@ -94,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
 
 //todo unit test
 
-        LeancloudDB dbt = LeancloudDB.getInstance();
+//        LeancloudDB dbt = LeancloudDB.getInstance();
 //        dbt.Login("t","666666");
 
 //        dbt.addUser("username1","password1");
@@ -141,8 +156,8 @@ public class MainActivity extends AppCompatActivity {
 //                replace_to_home(); 会出现控件布局打乱
 //                this.onCreate(null);
 //                放弃了，干脆写个record的返回页面///解决了如下，通过control能之间跳转到
-                NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-                navController.navigate(R.id.navigation_home);
+//                NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+//                navController.navigate(R.id.navigation_home);
             }
         }
     }

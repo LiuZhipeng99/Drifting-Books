@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import cn.leancloud.AVOSCloud;
 import cn.leancloud.AVObject;
 import cn.leancloud.AVQuery;
 import cn.leancloud.AVUser;
@@ -36,7 +37,9 @@ public class LeancloudDB {
     private LeancloudDB(){
         LeanConfig.initAVOSCloud(true);
     }
-
+    public LeancloudDB(Context ctx){ //专门写给login活动的
+        AVOSCloud.initialize(ctx, LeanConfig.APP_ID,LeanConfig.APP_KEY,LeanConfig.API_URL);
+    }
     public synchronized static LeancloudDB getInstance(){
         if(db == null){
             db = new LeancloudDB();
