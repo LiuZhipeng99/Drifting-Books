@@ -83,6 +83,7 @@ public class BlankFragment extends Fragment {
 //                bean.setImage("http://qiniu.lifelover.top/touxiang20210301170002.png");
 //                bean.setText("你好可爱");
                 List<BundleBoat> mylist=(List)getArguments().getSerializable("booklist");
+
                 recyclerViewItem=mylist;
 
             }else {

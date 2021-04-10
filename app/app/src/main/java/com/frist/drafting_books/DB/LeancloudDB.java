@@ -154,7 +154,7 @@ public class LeancloudDB {
             @Override
             public void onNext(@NonNull AVObject avObject) { //add之类的方法是给非数组类用也没啥发生。
                 currentUser.addUnique("booksId_list",avObject.getObjectId()); //这里保证了arr不会有重复的同一本书//但book无法保证，故book可能有ISBN和uerid都一样的书
-                currentUser.save(); //todo 这里其实不能保证因为书的id一定是唯一的，
+                currentUser.saveInBackground(); //todo 这里其实不能保证因为书的id一定是唯一的，
             }
             @Override
             public void onError(@NonNull Throwable e) {

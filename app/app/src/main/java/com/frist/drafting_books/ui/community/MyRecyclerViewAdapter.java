@@ -61,7 +61,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 //            Log.d(TAG, "onBindViewHolder: "+cover_url);
 //
 //        }
-        Log.d(TAG, "onBindViewHolder: "+position);
+        //Log.d(TAG, "onBindViewHolder: "+position);
         Gson gs = new Gson();
         JsonObject jb =gs.toJsonTree(list.get(position).get("book_json")).getAsJsonObject();
         String cover_url=jb.getAsJsonObject("nameValuePairs").get("cover_url").toString() ;
@@ -69,7 +69,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         String title=jb.getAsJsonObject("nameValuePairs").get("title").toString();
         title=title.substring(1,title.length()-1);
         //Log.d(TAG, "onBindViewHolder: "+cover_url);
-        String covertest = "https://img1.doubanio.com/view/subject/m/public/s32344288.jpg";
+        //String covertest = "https://img1.doubanio.com/view/subject/m/public/s32344288.jpg";
         //System.out.println(cover_url);
         Glide.with(context).load(cover_url)
                 .placeholder(R.drawable.nobookcover)
@@ -77,14 +77,20 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                 .error(R.drawable.nobookcover).into(holder.imageView);
 
         holder.textView.setText(title);
+        String finalTitle = title;
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent();
                 intent.setClass(context,bookDetails.class);
                 Bundle bundle=new Bundle();
-                BundleBoat bb=new BundleBoat(list.get(position));
-                bundle.putSerializable("book",bb);
+
+//                bundle.putSerializable("book",list.get(position));
+                intent.putExtra("title", finalTitle);
+//                bundle.putString("book","book");
+//                Log.d(TAG, "onClick: "+bundle);
+                Log.d(TAG, "onClick: "+list.get(position));
+//                Log.d(TAG, "onClick: "+(position));
                 intent.putExtras(bundle);
                 context.startActivity(intent);//内部的类也要继承
 

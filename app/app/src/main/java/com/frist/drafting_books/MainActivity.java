@@ -156,8 +156,9 @@ public class MainActivity extends AppCompatActivity {
 //                replace_to_home(); 会出现控件布局打乱
 //                this.onCreate(null);
 //                放弃了，干脆写个record的返回页面///解决了如下，通过control能之间跳转到
-//                NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-//                navController.navigate(R.id.navigation_home);
+                NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+                navController.navigate(R.id.navigation_home);
+                System.out.println("回调结束");
             }
         }
     }
