@@ -4,10 +4,15 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
 import com.frist.drafting_books.R;
 
 import java.util.List;
@@ -34,18 +39,25 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
         //这里可能键值对不上.
             holder.commentview.setTitle(commentList.get(position).get("reader"));
             holder.commentview.setContent(commentList.get(position).get("comment"));
+            Glide.with(context).load(commentList.get(position).get("headpic"))
+                .placeholder(R.drawable.nobookcover)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                .error(R.drawable.nobookcover).into(holder.imageView);
     }
 
     @Override
     public int getItemCount() {
         return commentList.size();
     }
+
     class MyViewHolder extends RecyclerView.ViewHolder{
         com.hymane.expandtextview.ExpandTextView commentview;
+        ImageView imageView;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             commentview=itemView.findViewById(R.id.commentitem);
-
+            imageView=itemView.findViewById(R.id.headpic);
         }
     }
     public void addTheReplyData(Map<String,String> map){

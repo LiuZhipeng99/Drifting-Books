@@ -225,7 +225,8 @@ void initCommentButton(){
             intent.setClass(bookDetails.this, Comment.class);
             Bundle bundle=new Bundle();
             bundle.putString("bookid",bookId);
-//            intent.putExtras(bundle);
+            intent.putExtras(bundle);
+
             startActivity(intent);
 
         }
