@@ -16,8 +16,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.frist.drafting_books.DB.LeancloudDB;
 import com.frist.drafting_books.R;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import org.greenrobot.eventbus.EventBus;
@@ -47,7 +49,7 @@ public class bookDetails extends AppCompatActivity {
         //解析书籍信息
 
         //初始化actionbar
-        getSupportActionBar().setTitle(bundle.getString("title")+"详情");
+        getSupportActionBar().setTitle("书籍详情");
         //左侧添加一个默认的返回图标
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 //设置返回键可用
@@ -56,7 +58,16 @@ public class bookDetails extends AppCompatActivity {
         Intent intent=getIntent();
         bundle=intent.getExtras();
         bookId=bundle.getString("bookid");
+        LeancloudDB dbt = LeancloudDB.getInstance();
+        //查询book
+        book=dbt.showBookDetail(bookId);
 
+        Log.d(TAG, "onCreate: "+book.get("book_json"));
+        //解析AVObject
+
+        Gson gs = new Gson();
+        jb =gs.toJsonTree(book.get("book_json")).getAsJsonObject();
+//        Log.d(TAG, "onCreate: "+jb);
         initRating();
         initDouBanButton();
         initCommentButton();
@@ -79,7 +90,10 @@ void initDetails(){
         //初始化封面。
     ImageView imageCover=findViewById(R.id.cover);
 
-        String cover_url=bundle.getString("cover_url");
+    String cover_url=jb.getAsJsonObject("nameValuePairs").get("cover_url").toString() ;
+                if(cover_url.length()>2){
+                    cover_url=cover_url.substring(1,cover_url.length()-1);
+                }
 
         Glide.with(this).load(cover_url)
                 .placeholder(R.drawable.nobookcover)
@@ -91,36 +105,49 @@ void initDetails(){
     //初始化标题.
     TextView title=findViewById(R.id.title);
 //    String t=jb.getAsJsonObject("nameValuePairs").get("title").toString();
-    if(bundle.getString("title").length()>=2){
-        String titl=bundle.getString("title");
-        title.setText(titl);
-    }
+    String tit=jb.getAsJsonObject("nameValuePairs").get("title").toString();
+                if(tit.length()>2){
+                    tit=tit.substring(1,title.length()-1);
+                }
+
+        title.setText(tit);
+
 
 
     //概要 lable
     TextView abstr=findViewById(R.id.abstracts);
-    if(bundle.getString("abstract").length()>=2){
-        String abs=bundle.getString("abstract");
-        String lable=bundle.getString("lable");
-        abstr.setText("摘要:  "+abs+"\n"+"标签:  "+lable);
+    String abs=jb.getAsJsonObject("nameValuePairs").get("abstract").toString();
+    if(abs.length()>2){
+        abs=abs.substring(1,abs.length());
     }
+    JsonArray temp= (JsonArray) jb.getAsJsonObject("nameValuePairs").getAsJsonObject("labels").get("values");
+    String lable=temp.get(1).toString();
+    abstr.setText("摘要:  "+abs+"\n"+"标签:  "+lable);
+
 
 
 
     //内容简介
 
     TextView contentdetail=findViewById(R.id.contentdetail);
-    if(bundle.getString("book_intro").length()>=2 ){
-        String book_intro=bundle.getString("book_intro");
+    String book_intro=jb.getAsJsonObject("nameValuePairs").get("book_intro").toString();
+                if(book_intro.length()>2){
+                    book_intro=book_intro.substring(1,title.length()-1);
+
+                }
         contentdetail.setText(book_intro);
-    }
+
 
     //作者详情
     TextView authordetail=findViewById(R.id.authordetail);
-    if(bundle.getString("author_intro").length()>=2){
-        String author_intro=bundle.getString("author_intro");
+    String author_intro=jb.getAsJsonObject("nameValuePairs").get("author_intro").toString();
+
+                if(author_intro.length()>2){
+                    author_intro=author_intro.substring(1,title.length()-1);
+
+                }
         authordetail.setText(author_intro);
-    }
+
 
 }
 
@@ -133,10 +160,16 @@ void initDouBanButton(){
             //TODO:在这里导入网址
 //            String url=jb.getAsJsonObject("nameValuePairs").get("url").toString() ;
 //            Uri uri= Uri.parse(url.substring(1,url.length()-1));
-            Uri uri=uri=Uri.parse("https://www.douban.com/");
-            if(bundle.getString("url").length()>2){
-                uri=Uri.parse(bundle.getString("url"));
-            }
+            Uri uri;
+            String url=jb.getAsJsonObject("nameValuePairs").get("url").toString();
+
+                if(url.length()>2){
+                    url=url.substring(1,url.length()-1);
+                    uri=uri=Uri.parse(url);
+
+                }else{
+                    uri=Uri.parse("https://www.douban.com/");
+                }
             Intent intent=new Intent(Intent.ACTION_VIEW,uri);
             startActivity(intent);
 
@@ -167,7 +200,8 @@ void initRating(){
 //TODO:要数据库获得数据append到textview
     //float rate=8.8f;
 //    String star=jb.getAsJsonObject("nameValuePairs").getAsJsonObject("rating").getAsJsonObject("nameValuePairs").get("star_count").toString() ;
-    String star=bundle.getString("stars");
+    String star=jb.getAsJsonObject("nameValuePairs").getAsJsonObject("rating").getAsJsonObject("nameValuePairs").get("star_count").toString() ;
+
     RatingBar ratingBar=findViewById(R.id.ratingbar);
     TextView textView=findViewById(R.id.rating_text);
     ratingBar.setRating(Float.parseFloat(star));
