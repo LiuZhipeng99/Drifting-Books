@@ -4,11 +4,15 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.frist.drafting_books.DB.GetBookFromLean;
 import com.frist.drafting_books.DB.LeancloudDB;
+import com.frist.drafting_books.DB.LoginCallback;
 import com.frist.drafting_books.ui.login.LoginActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -19,6 +23,9 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.List;
 
 import cn.leancloud.AVOSCloud;
@@ -43,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         Intent logina = new Intent(this, LoginActivity.class);
         startActivity(logina);
         setContentView(R.layout.activity_main);
+//todo 这里直接进入login有个问题是返回就直接进入Main了
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -82,8 +90,30 @@ public class MainActivity extends AppCompatActivity {
 //todo unit test
 
         LeancloudDB dbt = LeancloudDB.getInstance();
-//        dbt.addUser("username1","password1");
 //        dbt.Login("username1","password1");
+
+        dbt.showBooks(new GetBookFromLean() {
+            @Override
+            public void querySuccess(List<AVObject> books, List<AVObject> book_borrow) {
+//                HashMap<String ,String> bj = (HashMap<String, String>) books.get(0).get("book_json");
+                Gson gs = new Gson();
+                JsonObject jb =gs.toJsonTree(books.get(0).get("book_json")).getAsJsonObject();
+                System.out.println(jb.get("nameValuePairs"));
+//                Log.d("test", (String) bj.get("nameValuePairs").toString());
+
+
+            }
+
+            @Override
+            public void querySuccess(List<AVObject> books) {
+            }
+
+            @Override
+            public void queryFail(Error e) {
+
+            }
+        });
+//        dbt.addUser("username1","password1");
 //        dbt.addBook("19787101052039");
 //        dbt.lentBook("606a82a27fa6c4403bc994a0");
         //ArrayList<Map<String,String>> res = dbt.showMyBooks();
@@ -104,7 +134,11 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
+    /**
+    *@description 扫描录入图书，从扫描界面返回的函数，获取ISBN
+    *@author ZhipengLiu
+    *@created at 2021/4/9
+     **/
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -117,10 +151,9 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("扫码失败" );
             } else {
                 String ISBN = intentResult.getContents();//返回值
-//                String out = HttpHelper.sendGet("http://www.baidu.com",new HashMap<String, Object>(),"utf8");
-//                String out = HttpHelper.asy_get(ISBN);
-//                System.out.println("test out");
-//                System.out.println(out);
+                LeancloudDB dbt = LeancloudDB.getInstance();
+                dbt.addBook(ISBN,getApplication());
+
             }
         }
     }

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.login.LoginRegister">
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="4dp"
+        android:src="@mipmap/ic_logo"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp" />
+    <EditText
+        android:id="@+id/login_editaddress"
+        android:layout_width="255dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="8dp"
+        android:background="#FFFFFF"
+        android:ems="10"
+        app:layout_constraintStart_toEndOf="@+id/login_textaddress"
+        app:layout_constraintTop_toBottomOf="@+id/login_editpassword" />
+
+    <EditText
+        android:id="@+id/login_editname"
+        android:layout_width="255dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="8dp"
+        android:background="#FFFFFF"
+        android:ems="10"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/login_textname"
+        app:layout_constraintTop_toBottomOf="@+id/login_exchangehead" />
+
+    <TextView
+        android:id="@+id/login_textname"
+        android:layout_width="157dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:background="#FFFFFF"
+        android:text="用户名"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_exchangehead" />
+
+    <EditText
+        android:id="@+id/login_editpassword"
+        android:layout_width="255dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="8dp"
+        android:background="#FFFFFF"
+        android:ems="10"
+        android:inputType="textPassword"
+        app:layout_constraintStart_toEndOf="@+id/login_textpassword"
+        app:layout_constraintTop_toBottomOf="@+id/login_editbookroom" />
+
+    <EditText
+        android:id="@+id/login_editbookroom"
+        android:layout_width="255dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="4dp"
+        android:background="#FFFFFF"
+        android:ems="10"
+
+        app:layout_constraintStart_toEndOf="@+id/login_textbookroomname"
+        app:layout_constraintTop_toBottomOf="@+id/login_editname" />
+
+    <TextView
+        android:id="@+id/login_textpassword"
+        android:layout_width="157dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="8dp"
+        android:background="#FFFFFF"
+        android:text="密码"
+        app:layout_constraintTop_toBottomOf="@+id/login_textbookroomname"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <ImageView
+        android:id="@+id/login_head"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+
+        android:background="@drawable/shape_circle"
+        android:src="@drawable/hot_fill"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView1" />
+
+    <Button
+        android:id="@+id/login_exchangehead"
+        android:layout_width="114dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="4dp"
+        android:background="#F1ECEC"
+        android:gravity="center"
+        android:onClick="paizhao"
+        android:text="选择头像"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_head"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/login_textaddress"
+        android:layout_width="157dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="8dp"
+        android:background="#FFFFFF"
+        android:text="位置"
+        app:layout_constraintTop_toBottomOf="@+id/login_textpassword"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <TextView
+        android:id="@+id/login_textbookroomname"
+        android:layout_width="157dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="4dp"
+        android:background="#FFFFFF"
+        android:text="书房名"
+        app:layout_constraintTop_toBottomOf="@+id/login_textname"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>

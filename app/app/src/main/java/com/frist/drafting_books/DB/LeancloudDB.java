@@ -50,7 +50,7 @@ public class LeancloudDB {
     *@description 注册方法
      * 现在使用User对象不用考虑维护对话了即返回id，而注册需要邮箱/手机/用户名不同//目前只考虑用户名注册故无邮箱等参数
      **/
-    public void addUser(String name,String password){ //定位服务在此处获取还是获取后传参？todo 之后考虑定位
+    public void addUser(String name, String password, SignUpCallback cal){ //定位服务在此处获取还是获取后传参？todo 之后考虑定位
         AVUser user = new AVUser(); //没有表名因为用的_User表
 // 等同于 user.put("username", "Tom")
         user.setUsername(name);
@@ -66,11 +66,13 @@ public class LeancloudDB {
         user.signUpInBackground().subscribe(new Observer<AVUser>() { //方法也不同与object
             public void onSubscribe(@NotNull Disposable disposable) {}
             public void onNext(@NotNull AVUser user) {
-                System.out.println("注册成功。objectId：" + user.getObjectId());
+                cal.Success();
+                Log.d("DB","注册成功。objectId：" + user.getObjectId());
             }
             public void onError(@NotNull Throwable throwable) {
                 // 注册失败（通常是因为用户名已被使用）//todo 这里需要提示用户但需要传context/Toast.makeText()或dialog
-                Log.d("User","用户注册失败（多半已使用）");
+                cal.Fail();
+                Log.e("User","用户注册失败（多半已使用）");
             }
             public void onComplete() {}
         });
@@ -83,7 +85,7 @@ public class LeancloudDB {
             public void onNext(AVUser user) {
                 // 登录成功
                 callback.Success();
-                System.out.println("Login:"+AVUser.getCurrentUser().getObjectId());
+                Log.d("Login:",AVUser.getCurrentUser().getObjectId());
             }
             public void onError(Throwable throwable) {
                 // 登录失败（可能是密码错误）
@@ -139,7 +141,11 @@ public class LeancloudDB {
             }
         });
     }
-
+    /**
+    *@description addbook的私有函数，实现回调函数调用
+    *@author ZhipengLiu
+    *@created at 2021/4/9
+     **/
     private void submitBook(AVUser currentUser, @NotNull AVObject book) {
         book.saveInBackground().subscribe(new Observer<AVObject>() {
             @Override
@@ -195,7 +201,7 @@ public class LeancloudDB {
             public void onSubscribe(Disposable disposable) {}
             public void onNext(List<AVObject> arrs) {
                 // students 是包含满足条件的 Student 对象的数组
-                callback.querySuccess(arrs);
+                callback.querySuccess(arrs,arrs);
             }
             public void onError(Throwable throwable) {}
             public void onComplete() {}
