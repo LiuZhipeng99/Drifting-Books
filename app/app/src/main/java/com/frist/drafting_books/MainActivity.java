@@ -4,16 +4,24 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 
 import com.frist.drafting_books.DB.LeancloudDB;
+import com.frist.drafting_books.ui.home.HomeFragment;
 import com.frist.drafting_books.ui.login_default.LoginActivity;
+import com.frist.drafting_books.ui.record.RecordFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
@@ -50,7 +58,17 @@ public class MainActivity extends AppCompatActivity {
 
         //隐藏actionbar
         getSupportActionBar().hide();
-
+        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
+            @Override
+            public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
+                if(destination.getId() == R.id.navigation_message) {
+                    System.out.println("is message");
+                    navController.navigate(R.id.navigation_community);
+                } else {
+                    System.out.println("no message");
+                }
+            }
+        });
 
 
 
@@ -108,20 +126,42 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        System.out.println("扫码回调" );
+        Log.d("onActivityResult", "扫描回调");
         //扫码结果
         IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (intentResult != null) {
             if (intentResult.getContents() == null) {
-                //扫码失败
-                System.out.println("扫码失败" );
+                Log.d("onActivityResult", "扫描回调没有内容");
             } else {
                 String ISBN = intentResult.getContents();//返回值
                 LeancloudDB dbt = LeancloudDB.getInstance();
                 dbt.addBook(ISBN,getApplication());
-
+                //不是在qt活动的释放函数切换而是在这里
+//                switchContent();
+//                replace_to_home(); 会出现控件布局打乱
+//                this.onCreate(null);
+//                放弃了，干脆写个record的返回页面///解决了如下，通过control能之间跳转到
+                NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+                navController.navigate(R.id.navigation_home);
             }
         }
+    }
+    public void switchContent(Fragment from,Fragment to){
+        FragmentTransaction tran = getSupportFragmentManager().beginTransaction();
+        if(!to.isAdded()){
+            tran.hide(from).add(R.id.navigation_home,to).commit();
+        }else {
+            tran.hide(from).show(to).commit();
+        }
+    }
+    public void replace_to_home(){
+        //home是空的
+//        Fragment current = getSupportFragmentManager().findFragmentById(R.id.navigation_record);
+        FragmentTransaction tran = getSupportFragmentManager().beginTransaction();
+//        assert current != null;
+//        tran.replace(R.id.navigation_home,current);
+        HomeFragment ret = new HomeFragment();
+        tran.add(R.id.navigation_home,ret).commit();
     }
 
 //    //声明AMapLocationClient类对象
