@@ -1,6 +1,7 @@
 package com.frist.drafting_books.ui.community;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -13,25 +14,68 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.frist.drafting_books.DB.GetBookFromLean;
+import com.frist.drafting_books.DB.LeancloudDB;
 import com.frist.drafting_books.MainActivity;
 import com.frist.drafting_books.R;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
+import cn.leancloud.AVObject;
 import cn.leancloud.AVUser;
 
 public class Comment extends AppCompatActivity {
     private Dialog dialog;
     private RecyclerView recyclerView;
     private CommentAdapter adapter;
+    private Bundle bundle;
+    private String bookId;
+    private List<HashMap<String,String>> commentList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment);
+
+        getSupportActionBar().setTitle("书籍评论");
+        //左侧添加一个默认的返回图标
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+//设置返回键可用
+        getSupportActionBar().setHomeButtonEnabled(true);
+
+        Intent intent=getIntent();
+        bundle=intent.getExtras();
+        bookId=bundle.getString("bookid");
+        LeancloudDB dbt = LeancloudDB.getInstance();
+        //查询book
+        dbt.showBookDetail(bookId, new GetBookFromLean() {
+            @Override
+            public void querySuccess(List<AVObject> books, List<AVObject> book_borrow) {
+
+            }
+
+            @Override
+            public void querySuccess(List<AVObject> books) {
+
+            }
+
+            @Override
+            public void queryOneSuccess(AVObject bookoj) {
+
+            }
+
+            @Override
+            public void queryFail(Error e) {
+
+            }
+        });
+
+
         initComment();
         Button bt_comment=findViewById(R.id.bt_comment);
         bt_comment.setOnClickListener(new View.OnClickListener() {

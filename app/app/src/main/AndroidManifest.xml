@@ -48,6 +48,8 @@
         <meta-data android:name="com.amap.api.v2.apikey" android:value="mTLPzhGAbay7RJ" />
 <!--书籍详情与评论-->
         <activity android:name=".ui.community.bookDetails"></activity>
+        <activity android:name=".ui.community.Form"/>
+        <activity android:name=".ui.community.Communicate"/>
         <activity android:name=".ui.community.Comment" />
         <activity android:name=".ui.home.Dynamic"></activity>
         <activity android:name=".ui.home.Attentioner" />

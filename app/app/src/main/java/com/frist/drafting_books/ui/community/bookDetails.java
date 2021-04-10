@@ -80,6 +80,7 @@ public class bookDetails extends AppCompatActivity {
                 initDouBanButton();
                 initCommentButton();
                 initDetails();
+                initLendButton();
             }
 
             @Override
@@ -104,8 +105,22 @@ public class bookDetails extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+//TODO 加监听
+void initLendButton(){
+    Button button=findViewById(R.id.lend);
+
+    button.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            //TODO:在这里导入网址
+            Intent intent=new Intent(bookDetails.this,Form.class);
+            //传入书image，拥有者id
 
 
+            startActivity(intent);
+        }
+    });
+}
 void initDetails(){
         //初始化封面。
     ImageView imageCover=findViewById(R.id.cover);
@@ -208,8 +223,8 @@ void initCommentButton(){
             //TODO:在这里导入网址
             Intent intent=new Intent();
             intent.setClass(bookDetails.this, Comment.class);
-//            Bundle bundle=new Bundle();
-//            bundle.putSerializable("book",bookBundle);
+            Bundle bundle=new Bundle();
+            bundle.putString("bookid",bookId);
 //            intent.putExtras(bundle);
             startActivity(intent);
 
