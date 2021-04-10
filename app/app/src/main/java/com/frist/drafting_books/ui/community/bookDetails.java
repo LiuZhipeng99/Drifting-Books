@@ -16,16 +16,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.frist.drafting_books.DB.GetBookFromLean;
 import com.frist.drafting_books.DB.LeancloudDB;
 import com.frist.drafting_books.R;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.List;
 import java.util.Objects;
 
 import cn.leancloud.AVObject;
@@ -37,7 +36,7 @@ public class bookDetails extends AppCompatActivity {
     private JsonObject jb;//json解析出来的东西
     private Bundle bundle;
     private static final String TAG = "bookDetails";
-    @Subscribe
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -60,18 +59,39 @@ public class bookDetails extends AppCompatActivity {
         bookId=bundle.getString("bookid");
         LeancloudDB dbt = LeancloudDB.getInstance();
         //查询book
-        book=dbt.showBookDetail(bookId);
+        dbt.showBookDetail(bookId, new GetBookFromLean() {
+            @Override
+            public void querySuccess(List<AVObject> books, List<AVObject> book_borrow) {
 
-        Log.d(TAG, "onCreate: "+book.get("book_json"));
+            }
+
+            @Override
+            public void querySuccess(List<AVObject> books) {
+
+            }
+
+            @Override
+            public void queryOneSuccess(AVObject bookoj) {
+                book=bookoj;
+                Gson gs = new Gson();
+                jb =gs.toJsonTree(book.get("book_json")).getAsJsonObject();
+//        Log.d(TAG, "onCreate: "+jb);
+                initRating();
+                initDouBanButton();
+                initCommentButton();
+                initDetails();
+            }
+
+            @Override
+            public void queryFail(Error e) {
+
+            }
+        });
+
+
         //解析AVObject
 
-        Gson gs = new Gson();
-        jb =gs.toJsonTree(book.get("book_json")).getAsJsonObject();
-//        Log.d(TAG, "onCreate: "+jb);
-        initRating();
-        initDouBanButton();
-        initCommentButton();
-        initDetails();
+
 
     }
 
@@ -107,7 +127,7 @@ void initDetails(){
 //    String t=jb.getAsJsonObject("nameValuePairs").get("title").toString();
     String tit=jb.getAsJsonObject("nameValuePairs").get("title").toString();
                 if(tit.length()>2){
-                    tit=tit.substring(1,title.length()-1);
+                    tit=tit.substring(1,tit.length()-1);
                 }
 
         title.setText(tit);
@@ -132,7 +152,7 @@ void initDetails(){
     TextView contentdetail=findViewById(R.id.contentdetail);
     String book_intro=jb.getAsJsonObject("nameValuePairs").get("book_intro").toString();
                 if(book_intro.length()>2){
-                    book_intro=book_intro.substring(1,title.length()-1);
+                    book_intro=book_intro.substring(1,book_intro.length()-1);
 
                 }
         contentdetail.setText(book_intro);
@@ -143,7 +163,7 @@ void initDetails(){
     String author_intro=jb.getAsJsonObject("nameValuePairs").get("author_intro").toString();
 
                 if(author_intro.length()>2){
-                    author_intro=author_intro.substring(1,title.length()-1);
+                    author_intro=author_intro.substring(1,author_intro.length()-1);
 
                 }
         authordetail.setText(author_intro);

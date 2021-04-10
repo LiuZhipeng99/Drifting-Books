@@ -83,6 +83,11 @@ private  View root;
             }
 
             @Override
+            public void queryOneSuccess(AVObject book) {
+
+            }
+
+            @Override
             public void queryFail(Error e) {
                 Log.d(TAG, "queryFail: 获取书籍失败");
                 Toast.makeText(getContext(),"获取书籍失败",Toast.LENGTH_SHORT).show();
