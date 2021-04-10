@@ -71,4 +71,7 @@ dependencies {
     //评论区折叠
     implementation 'com.hymane.expandtextview:library:1.0.2'
 //    implementation 'com.zly.widget:collapsed-textview:1.0.4'
+    //glide圆形加载
+    implementation 'jp.wasabeef:glide-transformations:2.0.0'
+
 }
