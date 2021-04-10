@@ -131,9 +131,11 @@ public class Comment extends AppCompatActivity {
                     //等实现登录功能先。
 //                    map.put("name",curUser.get("name").toString());
                     //注意，adapter用的键值是reader comment
-                    map.put("reader","liyunwei");
-                    map.put("comment",replyContent);
+                    AVUser user=AVUser.getCurrentUser();
 
+                    map.put("reader",user.getUsername());
+                    map.put("comment",replyContent);
+                    map.put("headpic",user.get("imageLink").toString());
                     adapter.addTheReplyData(map);
                     Toast.makeText(Comment.this,"回复成功",Toast.LENGTH_SHORT).show();
                 }else {
