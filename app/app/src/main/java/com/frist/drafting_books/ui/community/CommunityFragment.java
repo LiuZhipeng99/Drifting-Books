@@ -81,9 +81,6 @@ private  View root;
             public void querySuccess(List<AVObject> books) {
             }
 
-            @Override
-            public void queryOneSuccess(AVObject book) {
-            }
 
             @Override
             public void queryOneSuccess(AVObject book) {
