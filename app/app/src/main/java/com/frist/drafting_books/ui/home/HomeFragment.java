@@ -5,12 +5,20 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.frist.drafting_books.DB.LeancloudDB;
 import com.frist.drafting_books.R;
+
+import cn.leancloud.AVUser;
 
 public class HomeFragment extends Fragment {
 
@@ -28,6 +36,18 @@ public class HomeFragment extends Fragment {
         attentionview = root.findViewById(R.id.attention);
         attentionerview = root.findViewById(R.id.attentioner);
         dynamicview = root.findViewById(R.id.dynamic);
+//        显示个人信息
+//        LeancloudDB dbt = LeancloudDB.getInstance();
+//        initDetail();
+        //！！！这个root和this的root不同步
+        TextView userName = root.findViewById(R.id.userNameView);
+        ImageView userHead = root.findViewById(R.id.userhead);
+        AVUser curU = AVUser.getCurrentUser();
+        userName.setText("   "+curU.getUsername()+"的书房");
+        Glide.with(this).load(curU.getString("imageLink"))
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .error(R.drawable.nobookcover).into(userHead);
+
         homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
@@ -72,6 +92,15 @@ public class HomeFragment extends Fragment {
         return root;
     }
 
+    private void initDetail() {
+        TextView userName = root.findViewById(R.id.userNameView);
+        ImageView userHead = root.findViewById(R.id.userhead);
+        AVUser curU = AVUser.getCurrentUser();
+        userName.setText(curU.getUsername()+"的书房");
+        Glide.with(this).load(curU.getString("imageLink"))
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .error(R.drawable.nobookcover).into(userHead);
+    }
 
 
 }

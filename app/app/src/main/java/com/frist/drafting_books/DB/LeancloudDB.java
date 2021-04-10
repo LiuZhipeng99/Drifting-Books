@@ -195,8 +195,19 @@ public class LeancloudDB {
 //        toChange.save();
         toChange.saveInBackground();
     }
-    public AVObject showBookDetail(String bookId){
-        return AVObject.createWithoutData(tableBooks, bookId);
+    public void showBookDetail(String bookId,GetBookFromLean callback){
+        AVQuery<AVObject> query = new AVQuery<>(tableBooks);
+        query.getInBackground(bookId).subscribe(new Observer<AVObject>() {
+            public void onSubscribe(Disposable disposable) {}
+            @Override
+            public void onNext(@NonNull AVObject avObject) {
+                callback.queryOneSuccess(avObject);
+            }
+            public void onError(Throwable throwable) {}
+            public void onComplete() {
+                System.out.println("这个complete不会比res返回更先");
+            }
+        });
     }
     public void showBooks(GetBookFromLean callback){//因为返回arraylist的元素map需要指定类型不如python的好使
         AVQuery<AVObject> query = new AVQuery<>(tableBooks);
@@ -231,7 +242,7 @@ public class LeancloudDB {
         String curId = AVUser.getCurrentUser().getObjectId();
 //        booksId_list = (ArrayList<String>) currentUser.get("booksId_list");
         //有了idlist，查询book表 /感觉上面这句有bug还是用条件查询吧
-        ArrayList<Map<String,String>> res = new ArrayList<>();
+//        ArrayList<Map<String,String>> res = new ArrayList<>();
         AVQuery<AVObject> query = new AVQuery<>(tableBooks);
         query.whereEqualTo("userId",curId);
         query.findInBackground().subscribe(new Observer<List<AVObject>>() {
@@ -244,5 +255,13 @@ public class LeancloudDB {
                 System.out.println("这个complete不会比res返回更先");
             }
         });
+    }
+    /**
+    *@description 加评论暂时不管
+    *@author ZhipengLiu
+    *@created at 2021/4/10
+     **/
+    public void addComment(String bookId){
+
     }
 }
