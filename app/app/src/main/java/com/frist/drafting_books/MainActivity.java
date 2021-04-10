@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                 // Passing each menu ID as a set of Ids because each
                 // menu should be considered as top level destinations.
                 AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                        R.id.navigation_home,R.id.navigation_record,R.id.navigation_community,R.id.navigation_message)
+                        R.id.navigation_home,R.id.navigation_record,R.id.navigation_community)
                         .build();
                 NavController navController = Navigation.findNavController(self, R.id.nav_host_fragment);
                 NavigationUI.setupActionBarWithNavController(self, navController, appBarConfiguration);
@@ -65,17 +65,17 @@ public class MainActivity extends AppCompatActivity {
 
                 //隐藏actionbar
                 getSupportActionBar().hide();
-                navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
-                    @Override
-                    public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
-                        if(destination.getId() == R.id.navigation_message) {
-                            System.out.println("is message");
-                            navController.navigate(R.id.navigation_community);
-                        } else {
-                            System.out.println("no message");
-                        }
-                    }
-                });
+//                navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
+//                    @Override
+//                    public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
+//                        if(destination.getId() == R.id.navigation_message) {
+//                            System.out.println("is message");
+//                            navController.navigate(R.id.navigation_community);
+//                        } else {
+//                            System.out.println("no message");
+//                        }
+//                    }
+//                });
             }
             @Override
             public void Fail() {

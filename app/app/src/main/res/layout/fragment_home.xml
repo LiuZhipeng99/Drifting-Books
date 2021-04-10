@@ -38,7 +38,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            >
 
             <TextView
                 android:id="@+id/userNameView"
@@ -47,11 +48,13 @@
                 android:layout_weight="1"
                 android:background="#FFFFFF"
                 android:text="我的书房"
-                android:textSize="20dp" />
+                android:textSize="20dp"
+                />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+
                 android:layout_weight="1"
                 android:background="#FFFFFF"
                 android:textSize="20dp" />
@@ -64,6 +67,7 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:orientation="horizontal"
+
         app:layout_constraintTop_toBottomOf="@+id/user">
 
         <LinearLayout
