@@ -12,13 +12,17 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.frist.drafting_books.DB.GetBookFromLean;
+import com.frist.drafting_books.DB.LeancloudDB;
 import com.frist.drafting_books.R;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.leancloud.AVObject;
 import in.srain.cube.views.ptr.PtrClassicDefaultFooter;
 import in.srain.cube.views.ptr.PtrDefaultHandler2;
 import in.srain.cube.views.ptr.PtrFrameLayout;
@@ -30,10 +34,10 @@ import in.srain.cube.views.ptr.header.MaterialHeader;
  * create an instance of this fragment.
  */
 public class BlankFragment extends Fragment {
-    static public final Boolean ALL=true;
-    static public final Boolean FRIEND=false;
+    static public final Boolean NOTYET=true;
+    static public final Boolean ALREADY=false;
     private View rootView;
-    private List<Map<String,String>> recyclerViewItem=new ArrayList<>();;
+    private List<BundleBoat> recyclerViewItem;
     private RecyclerView recyclerView;//声明RecyclerView
 
 
@@ -52,11 +56,15 @@ public class BlankFragment extends Fragment {
      * @return A new instance of fragment BlankFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static BlankFragment newInstance(Boolean judge) {
+        //用来放在bundle里传输数据
+
+    public static BlankFragment newInstance(Boolean judge,List<BundleBoat> list) {
         BlankFragment fragment = new BlankFragment();
        //
         Bundle bundle=new Bundle();
         bundle.putBoolean("judge",judge);
+
+        bundle.putSerializable("booklist", (Serializable) list);
         fragment.setArguments(bundle);
 
 
@@ -74,13 +82,13 @@ public class BlankFragment extends Fragment {
 //                BookHouseItemBean bean=new BookHouseItemBean();
 //                bean.setImage("http://qiniu.lifelover.top/touxiang20210301170002.png");
 //                bean.setText("你好可爱");
-                Map<String,String> map=new HashMap<>();
-                map.put("cover","http://qiniu.lifelover.top/touxiang20210301170002.png");
-                map.put("title","helloworld");
-                map.put("id","1");
-                recyclerViewItem.add(map);
+                List<BundleBoat> mylist=(List)getArguments().getSerializable("booklist");
+                recyclerViewItem=mylist;
+
             }else {
                 //TODO:这种情况取好友数据库，并且初始化recyclerItem
+                List<BundleBoat> mylist=(List)getArguments().getSerializable("booklist");
+                recyclerViewItem=mylist;
             }
         }
         Log.d(TAG, "onCreate: ");

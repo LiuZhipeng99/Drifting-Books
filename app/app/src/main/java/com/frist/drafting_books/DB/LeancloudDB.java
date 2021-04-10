@@ -40,6 +40,7 @@ public class LeancloudDB {
     private LeancloudDB(){
         LeanConfig.initAVOSCloud(true);
     }
+
     public synchronized static LeancloudDB getInstance(){
         if(db == null){
             db = new LeancloudDB();
