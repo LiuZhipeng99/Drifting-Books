@@ -15,10 +15,14 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
 import com.frist.drafting_books.DB.LeancloudDB;
 import com.frist.drafting_books.R;
 
 import cn.leancloud.AVUser;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import jp.wasabeef.glide.transformations.GrayscaleTransformation;
 
 public class HomeFragment extends Fragment {
 
@@ -45,7 +49,9 @@ public class HomeFragment extends Fragment {
         AVUser curU = AVUser.getCurrentUser();
         userName.setText("   "+curU.getUsername()+"的书房");
         Glide.with(this).load(curU.getString("imageLink"))
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+//                .transform(new GrayscaleTransformation(getContext()))
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                 .error(R.drawable.nobookcover).into(userHead);
 
         homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {

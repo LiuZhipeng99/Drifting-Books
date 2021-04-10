@@ -79,7 +79,10 @@ private  View root;
 
             @Override
             public void querySuccess(List<AVObject> books) {
-                //这里就可以不写
+            }
+
+            @Override
+            public void queryOneSuccess(AVObject book) {
             }
 
             @Override
