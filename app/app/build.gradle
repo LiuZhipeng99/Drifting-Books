@@ -78,8 +78,11 @@ dependencies {
     implementation 'com.hymane.expandtextview:library:1.0.2'
 //    implementation 'com.zly.widget:collapsed-textview:1.0.4'
 
-    
-
     //glide圆形加载
     implementation 'jp.wasabeef:glide-transformations:2.0.0'
+    //可以左右上下滑动的listView
+    implementation 'com.yydcdut:sdlv:0.7.6'
+    //下拉逐渐显示的ActionBar（B站）
+//    implementation 'com.github.manuelpeinado.fadingactionbar:fadingactionbar:3.1.2'
+
 }

@@ -77,7 +77,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         //System.out.println(cover_url);
         Glide.with(context).load(cover_url)
                 .placeholder(R.drawable.nobookcover)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                 .error(R.drawable.nobookcover).into(holder.imageView);
 
         holder.textView.setText(title);
