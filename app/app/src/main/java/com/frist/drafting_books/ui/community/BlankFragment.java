@@ -37,7 +37,7 @@ public class BlankFragment extends Fragment {
     static public final Boolean NOTYET=true;
     static public final Boolean ALREADY=false;
     private View rootView;
-    private List<MyRecyclerViewAdapter.BookBundle> recyclerViewItem;
+    private List<AVObject> recyclerViewItem;
     private RecyclerView recyclerView;//声明RecyclerView
 
 
@@ -58,9 +58,9 @@ public class BlankFragment extends Fragment {
     // TODO: Rename and change types and number of parameters
         //用来放在bundle里传输数据
     static class MyList implements Serializable {
-        public List<MyRecyclerViewAdapter.BookBundle> mlist;
+        public List<AVObject> mlist;
         MyList(List list){
-            mlist=(List<MyRecyclerViewAdapter.BookBundle>)list;
+            mlist=list;
         }
     }
 
