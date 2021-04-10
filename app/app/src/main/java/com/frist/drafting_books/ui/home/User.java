@@ -60,7 +60,7 @@ public class User extends AppCompatActivity {
 //一样也要初始化user的UI
         editname.setText(AVUser.getCurrentUser().getUsername());
         editpassword.setText(AVUser.getCurrentUser().getPassword());
-        editbookroom.setText(AVUser.getCurrentUser().getUsername()+"'bookroom");
+        editbookroom.setText(AVUser.getCurrentUser().getEmail());
         editaddress.setText("Shapingba, Chongqing");
         Glide.with(this)
                 .load(AVUser.getCurrentUser().get("imageLink"))
@@ -135,7 +135,7 @@ public class User extends AppCompatActivity {
                             public void onSubscribe(Disposable disposable) {}
                             public void onNext(AVFile file) {
                                 System.out.println("文件保存完成。objectId：" + file.getObjectId()+" URL:"+file.getUrl());
-                                db.updateUser(editname.getText().toString(),editpassword.getText().toString(),file.getUrl());;
+                                db.updateUser(editname.getText().toString(),editbookroom.getText().toString(),editpassword.getText().toString(),file.getUrl());;
                             }
                             public void onError(Throwable throwable) {
                                 // 保存失败，可能是文件无法被读取，或者上传过程中出现问题

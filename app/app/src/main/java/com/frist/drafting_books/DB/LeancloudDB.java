@@ -107,6 +107,8 @@ public class LeancloudDB {
         AVUser currentUser = AVUser.getCurrentUser();
         if (currentUser != null) {
             book.put("userId",AVUser.getCurrentUser().getObjectId());
+            book.put("userName",AVUser.getCurrentUser().getUsername());
+            book.put("email",AVUser.getCurrentUser().getEmail());
         } else {
             // 显示注册或登录页面
             Log.d("User","need sign");
@@ -171,12 +173,13 @@ public class LeancloudDB {
 //        currentUser.save();
     }
 
-    public void updateUser(String name,String password,String imageLink){ //todo 同时更新location但是是自动获取而不能手动修改/手机号邮箱目前不加入都是默认
+    public void updateUser(String name,String email,String password,String imageLink){ //todo 同时更新location但是是自动获取而不能手动修改/手机号邮箱目前不加入都是默认
         AVUser currentUser = AVUser.getCurrentUser(); //todo 可以当全局的userid变量的
         if (currentUser != null) {
             currentUser.setUsername(name);
             currentUser.setPassword(password);
             currentUser.put("imageLink",imageLink);
+            currentUser.setEmail(email);
             currentUser.saveInBackground();
         } else {
             // 显示注册或登录页面
