@@ -26,6 +26,12 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    //加这个为了解决source code ...
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
 }
 
 dependencies {
@@ -71,4 +77,6 @@ dependencies {
     //评论区折叠
     implementation 'com.hymane.expandtextview:library:1.0.2'
 //    implementation 'com.zly.widget:collapsed-textview:1.0.4'
+    //EventBus
+    implementation 'org.greenrobot:eventbus:3.1.1'
 }
