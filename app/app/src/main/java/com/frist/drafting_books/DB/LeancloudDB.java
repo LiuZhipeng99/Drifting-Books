@@ -55,7 +55,7 @@ public class LeancloudDB {
 // 等同于 user.put("username", "Tom")
         user.setUsername(name);
         user.setPassword(password);
-//        user.setEmail("tom@leancloud.example");
+        user.setEmail("tom@qq.example");
 //        user.setMobilePhoneNumber("+8618200008888");
 // 设置其他属性的方法跟 AVObject 一样
         user.put("imageLink",defaultImageLink);//在更新用户信息里改

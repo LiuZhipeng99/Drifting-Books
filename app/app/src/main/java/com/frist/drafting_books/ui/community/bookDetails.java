@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -115,8 +116,13 @@ void initLendButton(){
             //TODO:在这里导入网址
             Intent intent=new Intent(bookDetails.this,Form.class);
             //传入书image，拥有者id
-
-
+            intent.putExtra("to",book.get("email").toString());
+            String cover_url = jb.getAsJsonObject("nameValuePairs").get("cover_url").toString();
+            if(cover_url.length()>2){
+                cover_url=cover_url.substring(1,cover_url.length()-1);
+            }
+            intent.putExtra("bookcover",cover_url);
+            intent.putExtra("book_owner",book.get("userName").toString());
             startActivity(intent);
         }
     });
@@ -246,6 +252,5 @@ void initRating(){
     textView.append(star);
 
     }
-
 
 }
