@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import com.frist.drafting_books.R;
 
@@ -27,6 +28,14 @@ public class HomeFragment extends Fragment {
         attentionview = root.findViewById(R.id.attention);
         attentionerview = root.findViewById(R.id.attentioner);
         dynamicview = root.findViewById(R.id.dynamic);
+        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+
+            }
+        });
+
+
         userview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -1,7 +1,9 @@
 package com.frist.drafting_books.ui.login;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 import android.util.Patterns;
+import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -47,6 +49,7 @@ public class LoginViewModel extends ViewModel {
     }
 
     public void login(String username, String password) {
+
         // can be launched in a separate asynchronous job
 //        todo 这里是登录函数，登录成功和失败的情况
 //        LeancloudDB dbt = LeancloudDB.getInstance();
@@ -62,7 +65,28 @@ public class LoginViewModel extends ViewModel {
             @Override
             public void Fail() {
 //                loginResult.setValue(new LoginResult(222));
-//                Toast.makeText()
+
+                Toast.makeText(activity.getApplicationContext(),"User not registered, now registered",Toast.LENGTH_LONG).show();
+                dbt.addUser(username, password, new SignUpCallback() {
+                    @Override
+                    public void Success() {
+                        dbt.Login(username, password, new LoginCallback() {
+                            @Override
+                            public void Success() {
+                                loginResult.setValue(new LoginUser(username,password));
+//                        loginResult.setValue("result_u");
+                            }
+                            @Override
+                            public void Fail() {
+                                Toast.makeText(activity.getApplicationContext(),"The username has been registered.2",Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                    @Override
+                    public void Fail() {
+                        Toast.makeText(activity.getApplicationContext(),"The username has been registered",Toast.LENGTH_LONG).show();
+                    }
+                });
             }
         });
 

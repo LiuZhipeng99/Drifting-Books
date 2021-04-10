@@ -195,6 +195,9 @@ public class LeancloudDB {
 //        toChange.save();
         toChange.saveInBackground();
     }
+    public AVObject showBookDetail(String bookId){
+        return AVObject.createWithoutData(tableBooks, bookId);
+    }
     public void showBooks(GetBookFromLean callback){//因为返回arraylist的元素map需要指定类型不如python的好使
         AVQuery<AVObject> query = new AVQuery<>(tableBooks);
         query.findInBackground().subscribe(new Observer<List<AVObject>>() {
