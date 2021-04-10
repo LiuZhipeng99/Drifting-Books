@@ -1,8 +1,16 @@
-package com.frist.drafting_books.ui.login;
+package com.frist.drafting_books.ui.login_default;
 
 import android.app.Activity;
-import android.content.Intent;
+
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+
 import android.os.Bundle;
+
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -14,19 +22,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-
-import com.frist.drafting_books.DB.LeanConfig;
-import com.frist.drafting_books.MainActivity;
 import com.frist.drafting_books.R;
-import com.frist.drafting_books.ui.login_default.LoginFormState;
-
-import cn.leancloud.AVOSCloud;
-import cn.leancloud.AVUser;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -37,16 +33,16 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_login);
-//        loginViewModel = new ViewModelProvider(this)
-//                .get(LoginViewModel.class); 要想传act就用不了工厂
-        loginViewModel = new LoginViewModel(this);
+        loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
+                .get(LoginViewModel.class);
+
 
         final EditText usernameEditText = findViewById(R.id.username);
         final EditText passwordEditText = findViewById(R.id.password);
         final Button loginButton = findViewById(R.id.login);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
 
-        loginViewModel.getLoginState().observe(this, new Observer<LoginFormState>() {
+        loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
             public void onChanged(@Nullable LoginFormState loginFormState) {
                 if (loginFormState == null) {
@@ -62,17 +58,19 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        loginViewModel.getLoginResult().observe(this, new Observer<LoginUser>() {
+        loginViewModel.getLoginResult().observe(this, new Observer<LoginResult>() {
             @Override
-            public void onChanged(@Nullable LoginUser loginResult) {
+            public void onChanged(@Nullable LoginResult loginResult) {
                 if (loginResult == null) {
                     return;
                 }
                 loadingProgressBar.setVisibility(View.GONE);
-//                if (loginResult.getError() != null) {
-//                    showLoginFailed(loginResult.getError());
-//                }
-                updateUiWithUser(loginResult);
+                if (loginResult.getError() != null) {
+                    showLoginFailed(loginResult.getError());
+                }
+                if (loginResult.getSuccess() != null) {
+                    updateUiWithUser(loginResult.getSuccess());
+                }
                 setResult(Activity.RESULT_OK);
 
                 //Complete and destroy login activity once successful
@@ -121,23 +119,15 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void updateUiWithUser(LoginUser user) {
-        String welcome = getString(R.string.welcome) + user.n;
+    private void updateUiWithUser(LoggedInUserView model) {
+        String welcome = getString(R.string.welcome) + model.getDisplayName();
         // TODO : initiate successful logged in experience
-        System.out.println("password"+user.password);
+        finish();//直接给他终结
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
-        finish();
-        System.out.println("finish is done？");
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("test","不能传传输");
-        intent.putExtra("username",user.n);
-        intent.putExtra("password",user.password);
-        startActivity(intent);
-
-
     }
 
     private void showLoginFailed(@StringRes Integer errorString) {
+
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
     }
 }

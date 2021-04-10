@@ -1,3 +1,4 @@
+
 package com.frist.drafting_books.ui.community;
 
 import android.content.Intent;
@@ -173,5 +174,6 @@ void initRating(){
     textView.append(star);
 
     }
+
 
 }

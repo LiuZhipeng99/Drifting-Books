@@ -1,3 +1,4 @@
+
 package com.frist.drafting_books.ui.community;
 
 import java.io.Serializable;

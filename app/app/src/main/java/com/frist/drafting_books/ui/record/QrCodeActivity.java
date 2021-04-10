@@ -54,8 +54,9 @@ public class QrCodeActivity extends AppCompatActivity implements  DecoratedBarco
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        System.out.println("!!!!!!!!!!fffffffff!!!!!!!!!!");
+//        System.out.println("!!!!!!!!!!fffffffff!!!!!!!!!!");
         captureManager.onDestroy();
+
 
     }
 

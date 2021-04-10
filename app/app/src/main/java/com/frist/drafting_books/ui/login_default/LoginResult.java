@@ -1,4 +1,4 @@
-package com.frist.drafting_books.ui.login;
+package com.frist.drafting_books.ui.login_default;
 
 import androidx.annotation.Nullable;
 

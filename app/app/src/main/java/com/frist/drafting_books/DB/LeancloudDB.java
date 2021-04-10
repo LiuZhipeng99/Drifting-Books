@@ -1,12 +1,8 @@
 package com.frist.drafting_books.DB;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 
-import com.frist.drafting_books.MainActivity;
-import com.frist.drafting_books.R;
-import com.frist.drafting_books.ui.login.LoginActivity;
 import com.frist.drafting_books.utils.GetBookFromNetCallback;
 import com.frist.drafting_books.utils.VolleyHelper;
 
@@ -19,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import cn.leancloud.AVOSCloud;
 import cn.leancloud.AVObject;
 import cn.leancloud.AVQuery;
 import cn.leancloud.AVUser;
@@ -40,7 +37,9 @@ public class LeancloudDB {
     private LeancloudDB(){
         LeanConfig.initAVOSCloud(true);
     }
-
+    public LeancloudDB(Context ctx){ //专门写给login活动的
+        AVOSCloud.initialize(ctx, LeanConfig.APP_ID,LeanConfig.APP_KEY,LeanConfig.API_URL);
+    }
     public synchronized static LeancloudDB getInstance(){
         if(db == null){
             db = new LeancloudDB();
@@ -51,7 +50,7 @@ public class LeancloudDB {
     *@description 注册方法
      * 现在使用User对象不用考虑维护对话了即返回id，而注册需要邮箱/手机/用户名不同//目前只考虑用户名注册故无邮箱等参数
      **/
-    public void addUser(String name,String password){ //定位服务在此处获取还是获取后传参？todo 之后考虑定位
+    public void addUser(String name, String password, SignUpCallback cal){ //定位服务在此处获取还是获取后传参？todo 之后考虑定位
         AVUser user = new AVUser(); //没有表名因为用的_User表
 // 等同于 user.put("username", "Tom")
         user.setUsername(name);
@@ -67,11 +66,13 @@ public class LeancloudDB {
         user.signUpInBackground().subscribe(new Observer<AVUser>() { //方法也不同与object
             public void onSubscribe(@NotNull Disposable disposable) {}
             public void onNext(@NotNull AVUser user) {
-                System.out.println("注册成功。objectId：" + user.getObjectId());
+                cal.Success();
+                Log.d("DB","注册成功。objectId：" + user.getObjectId());
             }
             public void onError(@NotNull Throwable throwable) {
                 // 注册失败（通常是因为用户名已被使用）//todo 这里需要提示用户但需要传context/Toast.makeText()或dialog
-                Log.d("User","用户注册失败（多半已使用）");
+                cal.Fail();
+                Log.e("User","用户注册失败（多半已使用）");
             }
             public void onComplete() {}
         });
@@ -84,7 +85,7 @@ public class LeancloudDB {
             public void onNext(AVUser user) {
                 // 登录成功
                 callback.Success();
-                System.out.println("Login:"+AVUser.getCurrentUser().getObjectId());
+                Log.d("Login:",AVUser.getCurrentUser().getObjectId());
             }
             public void onError(Throwable throwable) {
                 // 登录失败（可能是密码错误）
@@ -140,7 +141,11 @@ public class LeancloudDB {
             }
         });
     }
-
+    /**
+    *@description addbook的私有函数，实现回调函数调用
+    *@author ZhipengLiu
+    *@created at 2021/4/9
+     **/
     private void submitBook(AVUser currentUser, @NotNull AVObject book) {
         book.saveInBackground().subscribe(new Observer<AVObject>() {
             @Override
@@ -149,7 +154,7 @@ public class LeancloudDB {
             @Override
             public void onNext(@NonNull AVObject avObject) { //add之类的方法是给非数组类用也没啥发生。
                 currentUser.addUnique("booksId_list",avObject.getObjectId()); //这里保证了arr不会有重复的同一本书//但book无法保证，故book可能有ISBN和uerid都一样的书
-                currentUser.save(); //todo 这里其实不能保证因为书的id一定是唯一的，
+                currentUser.saveInBackground(); //todo 这里其实不能保证因为书的id一定是唯一的，
             }
             @Override
             public void onError(@NonNull Throwable e) {
@@ -189,6 +194,9 @@ public class LeancloudDB {
         toChange.put("is_lent", false);
 //        toChange.save();
         toChange.saveInBackground();
+    }
+    public AVObject showBookDetail(String bookId){
+        return AVObject.createWithoutData(tableBooks, bookId);
     }
     public void showBooks(GetBookFromLean callback){//因为返回arraylist的元素map需要指定类型不如python的好使
         AVQuery<AVObject> query = new AVQuery<>(tableBooks);

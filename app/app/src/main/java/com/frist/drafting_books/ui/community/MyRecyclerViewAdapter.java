@@ -1,3 +1,4 @@
+
 package com.frist.drafting_books.ui.community;
 
 import android.content.Context;
@@ -170,3 +171,4 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         }
     }
 }
+

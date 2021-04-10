@@ -1,4 +1,4 @@
-package com.frist.drafting_books.data;
+package com.frist.drafting_books.data_login;
 
 /**
  * A generic class that holds a result success w/ data or an error exception.

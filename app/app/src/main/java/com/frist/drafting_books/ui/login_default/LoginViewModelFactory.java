@@ -1,11 +1,11 @@
-package com.frist.drafting_books.ui.login;
+package com.frist.drafting_books.ui.login_default;
 
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.annotation.NonNull;
 
-import com.frist.drafting_books.data.LoginDataSource;
-import com.frist.drafting_books.data.LoginRepository;
+import com.frist.drafting_books.data_login.LoginDataSource;
+import com.frist.drafting_books.data_login.LoginRepository;
 
 /**
  * ViewModel provider factory to instantiate LoginViewModel.
