@@ -1,4 +1,4 @@
-package com.frist.drafting_books.data.model;
+package com.frist.drafting_books.data_login.model;
 
 /**
  * Data class that captures user information for logged in users retrieved from LoginRepository

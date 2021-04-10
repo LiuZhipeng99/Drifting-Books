@@ -1,12 +1,8 @@
 package com.frist.drafting_books.DB;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 
-import com.frist.drafting_books.MainActivity;
-import com.frist.drafting_books.R;
-import com.frist.drafting_books.ui.login.LoginActivity;
 import com.frist.drafting_books.utils.GetBookFromNetCallback;
 import com.frist.drafting_books.utils.VolleyHelper;
 

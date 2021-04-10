@@ -1,18 +1,17 @@
-package com.frist.drafting_books.ui.login;
+package com.frist.drafting_books.ui.login_default;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import android.util.Patterns;
-import android.widget.Toast;
 
 import com.frist.drafting_books.DB.LeancloudDB;
 import com.frist.drafting_books.DB.LoginCallback;
 import com.frist.drafting_books.DB.SignUpCallback;
-import com.frist.drafting_books.data.LoginRepository;
-import com.frist.drafting_books.data.Result;
-import com.frist.drafting_books.data.model.LoggedInUser;
+import com.frist.drafting_books.data_login.LoginRepository;
+import com.frist.drafting_books.data_login.Result;
+import com.frist.drafting_books.data_login.model.LoggedInUser;
 import com.frist.drafting_books.R;
 
 import cn.leancloud.AVUser;

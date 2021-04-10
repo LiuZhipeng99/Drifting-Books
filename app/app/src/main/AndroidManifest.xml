@@ -56,7 +56,7 @@
         <activity android:name=".ui.home.Bug" />
         <activity android:name=".ui.home.Imformation" />
         <activity
-            android:name=".ui.login.LoginActivity"
+            android:name=".ui.login_default.LoginActivity"
             android:label="@string/title_activity_login" />
 
         <activity android:name=".ui.record.QrCodeActivity"

@@ -4,15 +4,10 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
-import com.frist.drafting_books.DB.GetBookFromLean;
 import com.frist.drafting_books.DB.LeancloudDB;
-import com.frist.drafting_books.DB.LoginCallback;
-import com.frist.drafting_books.ui.login.LoginActivity;
+import com.frist.drafting_books.ui.login_default.LoginActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -22,14 +17,6 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.List;
-
-import cn.leancloud.AVOSCloud;
-import cn.leancloud.AVObject;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -89,30 +76,9 @@ public class MainActivity extends AppCompatActivity {
 
 //todo unit test
 
-        LeancloudDB dbt = LeancloudDB.getInstance();
-//        dbt.Login("username1","password1");
+                LeancloudDB dbt = LeancloudDB.getInstance();
+//        dbt.Login("t","666666");
 
-        dbt.showBooks(new GetBookFromLean() {
-            @Override
-            public void querySuccess(List<AVObject> books, List<AVObject> book_borrow) {
-//                HashMap<String ,String> bj = (HashMap<String, String>) books.get(0).get("book_json");
-                Gson gs = new Gson();
-                JsonObject jb =gs.toJsonTree(books.get(0).get("book_json")).getAsJsonObject();
-                System.out.println(jb.get("nameValuePairs"));
-//                Log.d("test", (String) bj.get("nameValuePairs").toString());
-
-
-            }
-
-            @Override
-            public void querySuccess(List<AVObject> books) {
-            }
-
-            @Override
-            public void queryFail(Error e) {
-
-            }
-        });
 //        dbt.addUser("username1","password1");
 //        dbt.addBook("19787101052039");
 //        dbt.lentBook("606a82a27fa6c4403bc994a0");

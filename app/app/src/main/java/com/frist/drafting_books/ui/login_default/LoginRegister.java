@@ -1,4 +1,4 @@
-package com.frist.drafting_books.ui.login;
+package com.frist.drafting_books.ui.login_default;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.frist.drafting_books.R;
-import com.frist.drafting_books.ui.home.User;
 import com.wildma.pictureselector.PictureBean;
 import com.wildma.pictureselector.PictureSelector;
 public class LoginRegister extends AppCompatActivity {

@@ -1,6 +1,6 @@
-package com.frist.drafting_books.data;
+package com.frist.drafting_books.data_login;
 
-import com.frist.drafting_books.data.model.LoggedInUser;
+import com.frist.drafting_books.data_login.model.LoggedInUser;
 
 import java.io.IOException;
 
