@@ -37,7 +37,7 @@ public class BlankFragment extends Fragment {
     static public final Boolean NOTYET=true;
     static public final Boolean ALREADY=false;
     private View rootView;
-    private List<AVObject> recyclerViewItem;
+    private List<BundleBoat> recyclerViewItem;
     private RecyclerView recyclerView;//声明RecyclerView
 
 
@@ -57,20 +57,14 @@ public class BlankFragment extends Fragment {
      */
     // TODO: Rename and change types and number of parameters
         //用来放在bundle里传输数据
-    static class MyList implements Serializable {
-        public List<AVObject> mlist;
-        MyList(List list){
-            mlist=list;
-        }
-    }
 
-    public static BlankFragment newInstance(Boolean judge,List<AVObject> list) {
+    public static BlankFragment newInstance(Boolean judge,List<BundleBoat> list) {
         BlankFragment fragment = new BlankFragment();
        //
         Bundle bundle=new Bundle();
         bundle.putBoolean("judge",judge);
 
-        bundle.putSerializable("booklist", new MyList(list));
+        bundle.putSerializable("booklist", (Serializable) list);
         fragment.setArguments(bundle);
 
 
@@ -88,13 +82,13 @@ public class BlankFragment extends Fragment {
 //                BookHouseItemBean bean=new BookHouseItemBean();
 //                bean.setImage("http://qiniu.lifelover.top/touxiang20210301170002.png");
 //                bean.setText("你好可爱");
-                MyList mylist=(MyList)getArguments().getSerializable("booklist");
-                recyclerViewItem=mylist.mlist;
+                List<BundleBoat> mylist=(List)getArguments().getSerializable("booklist");
+                recyclerViewItem=mylist;
 
             }else {
                 //TODO:这种情况取好友数据库，并且初始化recyclerItem
-                MyList mylist=(MyList)getArguments().getSerializable("booklist");
-                recyclerViewItem=mylist.mlist;
+                List<BundleBoat> mylist=(List)getArguments().getSerializable("booklist");
+                recyclerViewItem=mylist;
             }
         }
         Log.d(TAG, "onCreate: ");

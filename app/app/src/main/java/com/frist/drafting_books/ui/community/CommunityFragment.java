@@ -29,14 +29,17 @@ public class CommunityFragment extends Fragment {
     private ViewPager2 mviewPager2;//页面
     private TabLayout mTabLayout;//头部
     private ArrayList<String> titles;//头部标题
-    private List<AVObject> notYetBookList;
-    private List<AVObject> alreadyBookList;
+    private List<BundleBoat> notYetBookList=new ArrayList<>();
+    private List<BundleBoat> alreadyBookList=new ArrayList<>();
 
 
 private  View root;
     List<Fragment> mfragments;
     private HomeViewModel homeViewModel;
     private static final String TAG = "HomeFragment";
+
+    public CommunityFragment() {
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -62,8 +65,15 @@ private  View root;
             @Override
             public void querySuccess(List<AVObject> books, List<AVObject> book_borrow) {
                 //在这里获取
-                notYetBookList=books;
-                alreadyBookList=book_borrow;
+//                BundleBoat b1 = new BundleBoat(book_borrow.get(0));
+                for(int i=0;i<books.size();i++){
+                    notYetBookList.add(new BundleBoat(books.get(i)));
+                }
+                for(int i=0;i<book_borrow.size();i++){
+                    alreadyBookList.add(new BundleBoat(book_borrow.get(i)));
+                }
+
+
                 init();//异步回调
             }
 

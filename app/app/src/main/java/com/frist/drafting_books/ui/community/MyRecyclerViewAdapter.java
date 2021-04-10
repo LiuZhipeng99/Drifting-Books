@@ -33,9 +33,9 @@ import cn.leancloud.AVObject;
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.MyViewHolder> {
     private static final String TAG = "MyRecyclerViewAdapter";
     private Context context;
-    private List<AVObject> list;
+    private List<BundleBoat> list;
 
-    public MyRecyclerViewAdapter(Context context, List<AVObject> list){
+    public MyRecyclerViewAdapter(Context context, List<BundleBoat> list){
         this.context = context;
 
         this.list = list;
@@ -48,13 +48,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         return myViewHolder;
 
     }
-    static class BookBundle extends AVObject implements Serializable {
 
-        BookBundle(AVObject book){
-            super(book);
-
-        }
-    }
     //用来绑定数据到view上。
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
@@ -89,7 +83,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                 Intent intent=new Intent();
                 intent.setClass(context,bookDetails.class);
                 Bundle bundle=new Bundle();
-                BookBundle bb=new BookBundle(list.get(position));
+                BundleBoat bb=new BundleBoat(list.get(position));
                 bundle.putSerializable("book",bb);
                 intent.putExtras(bundle);
                 context.startActivity(intent);//内部的类也要继承

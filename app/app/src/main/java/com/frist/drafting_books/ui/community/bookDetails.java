@@ -17,7 +17,7 @@ import java.util.Objects;
 
 public class bookDetails extends AppCompatActivity {
     private String bookId;
-
+    private BundleBoat bundleBoat;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -25,6 +25,7 @@ public class bookDetails extends AppCompatActivity {
         setContentView(R.layout.activity_book_details);
         Bundle bundle = new Bundle();
         bundle = getIntent().getExtras();
+        bundleBoat=(BundleBoat)bundle.getSerializable("book");
         //bookId = bundle.getString("bookId");
 //        getSupportActionBar().hide();
 
