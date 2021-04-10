@@ -155,7 +155,9 @@ void initDetails(){
                     book_intro=book_intro.substring(1,book_intro.length()-1);
 
                 }
-        contentdetail.setText(book_intro);
+    Log.d(TAG, "initDetails: "+book_intro);
+        contentdetail.setText(book_intro.replace("\\n","\n"));
+
 
 
     //作者详情
@@ -166,7 +168,7 @@ void initDetails(){
                     author_intro=author_intro.substring(1,author_intro.length()-1);
 
                 }
-        authordetail.setText(author_intro);
+        authordetail.setText(author_intro.replace("\\n","\n"));
 
 
 }
