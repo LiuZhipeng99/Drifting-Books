@@ -1,4 +1,4 @@
-package com.frist.drafting_books.ui.login_default;
+package com.frist.drafting_books.ui.login;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;

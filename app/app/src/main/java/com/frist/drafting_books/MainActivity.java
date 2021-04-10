@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
 //todo unit test
 
-                LeancloudDB dbt = LeancloudDB.getInstance();
+        LeancloudDB dbt = LeancloudDB.getInstance();
 //        dbt.Login("t","666666");
 
 //        dbt.addUser("username1","password1");
