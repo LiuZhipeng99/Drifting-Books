@@ -1,4 +1,4 @@
-package com.frist.drafting_books.DB;
+package com.frist.drafting_books.DB.not_used;
 
 
 import android.content.Context;

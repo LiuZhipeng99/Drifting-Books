@@ -165,7 +165,7 @@ public class LeancloudDB {
             @Override
             public void onNext(@NonNull AVObject avObject) { //add之类的方法是给非数组类用也没啥发生。
                 currentUser.addUnique("booksId_list",avObject.getObjectId()); //这里保证了arr不会有重复的同一本书//但book无法保证，故book可能有ISBN和uerid都一样的书
-                currentUser.saveInBackground(); //todo 这里其实不能保证因为书的id一定是唯一的，
+                currentUser.saveInBackground().subscribe(); //todo 这里其实不能保证因为书的id一定是唯一的，
             }
             @Override
             public void onError(@NonNull Throwable e) {
@@ -189,7 +189,7 @@ public class LeancloudDB {
             currentUser.put("imageLink",imageLink);
             Log.d("DB",imageLink);
             currentUser.setEmail(email);
-            currentUser.saveInBackground();
+            currentUser.saveInBackground().subscribe();
         } else {
             // 显示注册或登录页面
             Log.d("DB","need sign");
@@ -199,7 +199,7 @@ public class LeancloudDB {
         AVUser currentUser = AVUser.getCurrentUser();
         if (currentUser != null) {
             currentUser.setPassword(password);
-            currentUser.saveInBackground();
+            currentUser.saveInBackground().subscribe();
         } else {
             // 显示注册或登录页面
             Log.d("DB", "need sign");
@@ -210,7 +210,7 @@ public class LeancloudDB {
         if (currentUser != null) {
             currentUser.setUsername(name);
             currentUser.setEmail(email);
-            currentUser.saveInBackground();
+            currentUser.saveInBackground().subscribe();
         } else {
             // 显示注册或登录页面
             Log.d("DB","need sign");
@@ -220,13 +220,13 @@ public class LeancloudDB {
         AVObject toChange = AVObject.createWithoutData(tableBooks, bookId);
         toChange.put("is_lent", true);
 //        toChange.save();
-        toChange.saveInBackground();
+        toChange.saveInBackground().subscribe();
     }
     public void returnBook(String bookId){
         AVObject toChange = AVObject.createWithoutData(tableBooks, bookId);
         toChange.put("is_lent", false);
 //        toChange.save();
-        toChange.saveInBackground();
+        toChange.saveInBackground().subscribe();
     }
     public void showBookDetail(String bookId,GetBookFromLean callback){
         AVQuery<AVObject> query = new AVQuery<>(tableBooks);

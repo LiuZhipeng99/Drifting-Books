@@ -49,16 +49,16 @@ public class LoginActivity extends AppCompatActivity {
         final Button loginButton = findViewById(R.id.login);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
 
-//        unittest
+////       TODO unittest /SDK save = saveinback.subscrib()
 //        LeancloudDB dbt = new LeancloudDB(getApplication());
 //        dbt.Login("liu", "666666", new LoginCallback() {
 //            @Override
 //            public void Success() {
-//                Toast.makeText(getApplicationContext(),"test",Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(),"Login test",Toast.LENGTH_SHORT).show();
 //                AVUser cur = AVUser.getCurrentUser();
-//                cur.addUnique("booksId_list","iiiiiiiii");
-//                cur.put("new","mewcol");
-//                cur.saveInBackground();
+//                cur.addUnique("booksId_list","454544");
+//                cur.put("new","update");
+//                cur.saveInBackground().subscribe();
 //            }
 //
 //            @Override
