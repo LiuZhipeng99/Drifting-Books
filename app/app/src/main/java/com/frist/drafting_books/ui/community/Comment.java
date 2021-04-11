@@ -50,7 +50,7 @@ public class Comment extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment);
 
-        getSupportActionBar().setTitle("书籍评论");
+        getSupportActionBar().setTitle("Comments");
         //左侧添加一个默认的返回图标
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 //设置返回键可用

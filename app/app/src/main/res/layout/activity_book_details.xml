@@ -66,7 +66,7 @@
                     android:id="@+id/rating_text"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="豆瓣评分:  "
+                    android:text="The rating on Douban.com:  "
                     android:textSize="20dp"
                     android:gravity="bottom"
                     />
@@ -101,7 +101,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="内容简介"
+                    android:text="Introduction of the contents"
                     android:textSize="20dp"
                     android:layout_margin="5dp"/>
                 <TextView
@@ -128,7 +128,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="作者详情"
+                    android:text="Introduction of the author"
                     android:textSize="20dp"
                     android:layout_margin="5dp"/>
                 <TextView
@@ -154,20 +154,20 @@
             android:id="@+id/doubanbutton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="豆瓣"
+            android:text="Douban"
             android:layout_weight="1"
             />
         <Button
             android:id="@+id/commentButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="评论"
+            android:text="Comment"
             android:layout_weight="1"/>
         <Button
             android:id="@+id/lend"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="借阅"
+            android:text="Lend it"
             android:layout_weight="1"/>
     </LinearLayout>
 </RelativeLayout>

@@ -19,7 +19,7 @@ public class attention extends AppCompatActivity {
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.drawable.ic_esc);
-            actionBar.setTitle("关注0人");
+            actionBar.setTitle("Following 0");
         }
     }
     @Override

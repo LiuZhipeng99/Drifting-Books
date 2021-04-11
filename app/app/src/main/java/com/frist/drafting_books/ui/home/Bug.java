@@ -18,7 +18,7 @@ public class Bug extends AppCompatActivity {
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.drawable.ic_esc);
-            actionBar.setTitle("报bug，提建议");
+            actionBar.setTitle("Bugs");
         }
     }
     @Override

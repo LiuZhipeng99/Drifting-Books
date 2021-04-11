@@ -90,7 +90,7 @@ private  View root;
             @Override
             public void queryFail(Error e) {
                 Log.d(TAG, "queryFail: 获取书籍失败");
-                Toast.makeText(getContext(),"获取书籍失败",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(),"Failed to get book",Toast.LENGTH_SHORT).show();
             }
         });
         return root;
@@ -103,8 +103,8 @@ private  View root;
         mfragments.add(BlankFragment.newInstance(BlankFragment.NOTYET,notYetBookList));//这里传入两个参数
         mfragments.add(BlankFragment.newInstance(BlankFragment.ALREADY,alreadyBookList));
         titles = new ArrayList<>();
-        titles.add("未借的书");
-        titles.add("已借的书");
+        titles.add("Share books");
+        titles.add("Recorded books");
         mviewPager2=root.findViewById(R.id.viewpager2);
         mTabLayout=root.findViewById(R.id.tab_layout);
         //调试代码
@@ -133,7 +133,7 @@ private  View root;
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-                Log.d("amy",position+"");
+//                Log.d("amy",position+"");
             }
 
             @Override

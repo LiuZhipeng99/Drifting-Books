@@ -170,7 +170,7 @@ public class BlankFragment extends Fragment {
                         //完成加载，隐藏布局
                         NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
                         navController.navigate(R.id.navigation_community);
-                        Toast.makeText(getContext(), "刷新结束", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Refresh done", Toast.LENGTH_SHORT).show();
                         ptrFrameLayout.refreshComplete();
                     }
                 },1000);
@@ -184,7 +184,7 @@ public class BlankFragment extends Fragment {
                     public void run() {
                         NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
                         navController.navigate(R.id.navigation_community);
-                        Toast.makeText(getContext(), "加载结束", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Load done", Toast.LENGTH_SHORT).show();
                         //结束刷新，隐藏布局
                         ptrFrameLayout.refreshComplete();
                     }

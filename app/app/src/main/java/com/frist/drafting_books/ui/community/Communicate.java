@@ -17,7 +17,7 @@ public class Communicate extends AppCompatActivity {
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.drawable.ic_esc);
-            actionBar.setTitle("（ID:xx）的留言");
+            actionBar.setTitle("（ID:xx）Message");
         }
 
     }

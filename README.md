@@ -4,6 +4,10 @@ The course design APP, a book floating and lending tool, aims to share books.
 
 ## Preview
 
+
+
+![](https://cdn.jsdelivr.net/gh/kivid/Pics/img/[8NV4_1DQ}C~IG`MS59@TGT.png)
+
 ## Development Technology
 
 - **Multi-threaded development/Asynchronous/Thread communication**

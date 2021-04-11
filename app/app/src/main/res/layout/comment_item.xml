@@ -11,23 +11,24 @@
     android:layout_gravity="top"
     android:layout_weight="5"
     />
+
     <com.hymane.expandtextview.ExpandTextView
-        android:layout_weight="1"
         android:id="@+id/commentitem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="8dp"
+        android:layout_weight="1"
         android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="8dp"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingBottom="8dp"
         app:contentTextSize="14sp"
-        app:expandHint="点击展开"
-        app:foldHint="点击收回"
+        app:expandHint="Click on"
+        app:foldHint="Click on the back  "
         app:textContentColor="?android:attr/textColorPrimary"
         app:textHintColor="?android:attr/textColorPrimary"
         app:textTitleColor="?android:attr/textColorSecondary"
         app:titleText="标题党"
-        app:titleTextSize="16sp"/>
+        app:titleTextSize="16sp" />
 
 
 

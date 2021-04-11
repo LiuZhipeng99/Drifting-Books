@@ -48,9 +48,8 @@
                 android:layout_height="52dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="24dp"
-                android:layout_marginRight="24dp"
                 android:background="#FFFFFF"
-                android:text="用户名"
+                android:text="Username"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -84,7 +83,7 @@
                 android:layout_height="52dp"
                 android:layout_marginTop="8dp"
                 android:background="#FFFFFF"
-                android:text="密码"
+                android:text="Password"
                 app:layout_constraintTop_toBottomOf="@+id/textbookroomname"
                 tools:ignore="MissingConstraints"
                 tools:layout_editor_absoluteX="0dp" />
@@ -104,13 +103,13 @@
 
             <Button
                 android:id="@+id/exchangehead"
-                android:layout_width="114dp"
+                android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginTop="4dp"
                 android:background="#F1ECEC"
                 android:gravity="center"
                 android:onClick="paizhao"
-                android:text="修改头像"
+                android:text="Change avatar "
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.495"
                 app:layout_constraintStart_toStartOf="parent"
@@ -123,7 +122,8 @@
                 android:layout_height="52dp"
                 android:layout_marginTop="8dp"
                 android:background="#FFFFFF"
-                android:text="位置"
+                android:text="Location"
+                android:enabled="false"
                 app:layout_constraintTop_toBottomOf="@+id/textpassword"
                 tools:ignore="MissingConstraints"
                 tools:layout_editor_absoluteX="0dp" />
@@ -134,7 +134,7 @@
                 android:layout_height="52dp"
                 android:layout_marginTop="4dp"
                 android:background="#FFFFFF"
-                android:text="邮箱"
+                android:text="E-mail"
                 app:layout_constraintTop_toBottomOf="@+id/textname"
                 tools:ignore="MissingConstraints"
                 tools:layout_editor_absoluteX="0dp" />
@@ -147,7 +147,7 @@
                 android:layout_marginTop="8dp"
                 android:drawableLeft="@drawable/ic_about"
                 android:gravity="center_vertical|left"
-                android:text="关于Dritook"
+                android:text="About"
                 app:layout_constraintTop_toBottomOf="@+id/bug"
                 tools:layout_editor_absoluteX="1dp" />
 
@@ -168,7 +168,7 @@
                 android:layout_height="50dp"
                 android:drawableLeft="@drawable/ic_message1"
                 android:gravity="center_vertical|left"
-                android:text="新的消息"
+                android:text="New message"
                 app:layout_constraintTop_toBottomOf="@+id/editaddress"
                 tools:layout_editor_absoluteX="0dp" />
 
@@ -179,7 +179,7 @@
                 android:layout_marginTop="8dp"
                 android:drawableLeft="@drawable/ic_bug"
                 android:gravity="center_vertical|left"
-                android:text="报Bug,提建议"
+                android:text="Bugs"
                 app:layout_constraintTop_toBottomOf="@+id/news"
                 tools:layout_editor_absoluteX="1dp" />
         </androidx.constraintlayout.widget.ConstraintLayout>

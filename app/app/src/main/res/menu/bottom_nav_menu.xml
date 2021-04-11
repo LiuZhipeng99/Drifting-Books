@@ -4,7 +4,7 @@
     <item
         android:id="@+id/navigation_community"
         android:icon="@drawable/ic_community"
-        android:title="@string/title_community"/>
+        android:title="community"/>
 
 <!--    <item-->
 <!--        android:id="@+id/navigation_news"-->
@@ -15,7 +15,7 @@
         android:id="@+id/navigation_record"
         android:icon="@drawable/ic_record"
 
-        android:title="@string/title_recored"/>
+        android:title="record"/>
 <!--    <item-->
 <!--        android:id="@+id/navigation_message"-->
 <!--        android:icon="@drawable/ic_message"-->
@@ -25,6 +25,6 @@
     <item
         android:id="@+id/navigation_home"
         android:icon="@drawable/ic_home"
-        android:title="@string/title_notifications"/>
+        android:title="home"/>
 
 </menu>

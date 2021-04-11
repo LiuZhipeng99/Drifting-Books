@@ -29,7 +29,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:textSize="20dp"
-                android:text="图书拥有者"/>
+                android:text="Book owner"/>
             <TextView
                 android:id="@+id/owner_id"
                 android:layout_width="match_parent"
@@ -56,7 +56,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="姓名"
+                android:text="Name"
                 android:textSize="20dp"
                 android:gravity="center"/>
 
@@ -80,7 +80,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="联系方式"
+                android:text="Contact information"
                 android:textSize="20dp"
                 android:gravity="center"/>
 
@@ -104,7 +104,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="地址"
+                android:text="Your Adress"
                 android:textSize="20dp"
                 android:gravity="center"/>
 
@@ -127,7 +127,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="借阅方式"
+                android:text="Borrowing way"
                 android:textSize="20dp"
                 android:gravity="center"/>
             <RadioGroup
@@ -141,22 +141,22 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:text="自取"
+                    android:text="Take it by yourself"
                     android:textSize="15dp" />
                 <RadioButton
                     android:id="@+id/radiobutton_2"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:text="邮寄"
+                    android:text="By mail"
                     android:textSize="15dp" />
                 <RadioButton
                     android:id="@+id/radiobutton_3"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:text="其他（请留言）"
-                    android:textSize="15dp" />
+                    android:text="Others（Leave a message）"
+                    android:textSize="10dp" />
 
             </RadioGroup>
         </LinearLayout>
@@ -170,7 +170,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:text="借阅时间"
+                android:text="Borrow Time"
                 android:textSize="20dp"
                 android:gravity="center"/>
             <EditText
@@ -180,7 +180,7 @@
                 android:layout_weight="1"
                 android:textSize="10dp"
                 android:gravity="center"
-                android:text="起始时间"
+                android:text="Start-Time"
                 android:background="@null"
                 />
             <EditText
@@ -190,7 +190,7 @@
                 android:layout_weight="1"
                 android:textSize="10dp"
                 android:gravity="center"
-                android:text="结束时间"
+                android:text="End-Time"
                 android:background="@null"
 
                 />
@@ -205,7 +205,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="留言"
+                android:text="Message Board"
                 android:textSize="20dp"
                 android:gravity="center"/>
 

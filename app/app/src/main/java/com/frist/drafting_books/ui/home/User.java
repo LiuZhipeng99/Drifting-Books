@@ -56,7 +56,7 @@ public class User extends AppCompatActivity {
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.drawable.ic_esc);
-            actionBar.setTitle("编辑个人信息");
+            actionBar.setTitle("Edit your information");
         }
         about=findViewById(R.id.about);
         bug= findViewById(R.id.bug);

@@ -18,7 +18,7 @@ public class Imformation extends AppCompatActivity {
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.drawable.ic_esc);
-            actionBar.setTitle("关于Driftook");
+            actionBar.setTitle("About");
         }
     }
     @Override

@@ -19,7 +19,7 @@ public class Attentioner extends AppCompatActivity {
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.drawable.ic_esc);
-            actionBar.setTitle("被0人关注");
+            actionBar.setTitle("Follower 0");
         }
     }
     @Override

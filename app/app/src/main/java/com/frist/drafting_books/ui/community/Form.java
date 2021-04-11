@@ -67,7 +67,7 @@ public class Form extends AppCompatActivity {
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.drawable.ic_esc);
-            actionBar.setTitle("借阅信息");
+            actionBar.setTitle("Borrowing information");
         }
         time_start.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -120,7 +120,7 @@ public class Form extends AppCompatActivity {
                             "\nLeave message:"+((TextView)findViewById(R.id.leavemessage_edit)).getText().toString();
                     email.put("text",email_text);
                     sendEmail_kit(email);
-                    builder=new AlertDialog.Builder(this).setTitle("邮件发送提醒").setMessage("邮件已发送，注意关注邮箱。").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    builder=new AlertDialog.Builder(this).setTitle("Email reminder").setMessage("The mail has been sent, pay attention to the mailbox.").setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             //ToDo: 你想做的事情
@@ -130,7 +130,7 @@ public class Form extends AppCompatActivity {
                     });
                     builder.create().show();
                 }else {
-                    builder=new AlertDialog.Builder(this).setTitle("内容提醒").setMessage("姓名与联系方式不能为空。").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    builder=new AlertDialog.Builder(this).setTitle("Content reminder").setMessage("The name and contact information cannot be empty.").setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             //ToDo: 你想做的事情

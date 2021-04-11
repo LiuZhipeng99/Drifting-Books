@@ -66,7 +66,7 @@ public class HomeFragment extends Fragment {
         TextView userName = root.findViewById(R.id.userNameView);
         ImageView userHead = root.findViewById(R.id.userhead);
         AVUser curU = AVUser.getCurrentUser();
-        userName.setText("   "+curU.getUsername()+"的书房");
+        userName.setText("   "+curU.getUsername()+" Bookroom");
         Glide.with(this).load(curU.getString("imageLink"))
                 .apply(RequestOptions.bitmapTransform(new CircleCrop()))
 //                .transform(new GrayscaleTransformation(getContext()))

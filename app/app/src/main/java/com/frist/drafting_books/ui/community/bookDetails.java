@@ -49,7 +49,7 @@ public class bookDetails extends AppCompatActivity {
         //解析书籍信息
 
         //初始化actionbar
-        getSupportActionBar().setTitle("书籍详情");
+        getSupportActionBar().setTitle("Book Detail");
         //左侧添加一个默认的返回图标
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 //设置返回键可用
@@ -163,7 +163,7 @@ void initDetails(){
     }
     JsonArray temp= (JsonArray) jb.getAsJsonObject("nameValuePairs").getAsJsonObject("labels").get("values");
     String lable=temp.get(1).toString();
-    abstr.setText("摘要:  "+abs+"\n"+"标签:  "+lable);
+    abstr.setText("Abstract:  "+abs+"\n"+"Label:  "+lable);
 
 
 

@@ -23,22 +23,23 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
         android:layout_marginBottom="70dp"
-        android:text="请对准二维码开始扫描"
+        android:text="Please start scanning the QR code "
         android:textColor="#fff" />
+
     <TextView
         android:id="@+id/btn_manual"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
 
+        android:layout_marginBottom="20dp"
         android:background="@drawable/shape_round_button_solid_transparent_stroke_white"
         android:gravity="center"
         android:paddingLeft="10dp"
         android:paddingTop="6dp"
         android:paddingRight="10dp"
         android:paddingBottom="6dp"
-        android:layout_marginBottom="20dp"
-        android:text="手动输入"
+        android:text="2-D QR code"
         android:textColor="@color/white"
         android:textSize="12sp" />
 
