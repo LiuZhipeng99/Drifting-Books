@@ -65,7 +65,6 @@ public class LoginViewModel extends ViewModel {
             @Override
             public void Fail() {
 //                loginResult.setValue(new LoginResult(222));
-
                 Toast.makeText(activity.getApplicationContext(),"User not registered, now registered",Toast.LENGTH_LONG).show();
                 dbt.addUser(username, password, new SignUpCallback() {
                     @Override

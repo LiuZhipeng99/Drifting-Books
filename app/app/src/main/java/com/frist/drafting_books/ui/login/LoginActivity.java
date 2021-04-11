@@ -21,6 +21,9 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.frist.drafting_books.DB.LeanConfig;
+import com.frist.drafting_books.DB.LeancloudDB;
+import com.frist.drafting_books.DB.LoginCallback;
+import com.frist.drafting_books.DB.SignUpCallback;
 import com.frist.drafting_books.MainActivity;
 import com.frist.drafting_books.R;
 import com.frist.drafting_books.ui.login_default.LoginFormState;
@@ -45,6 +48,25 @@ public class LoginActivity extends AppCompatActivity {
         final EditText passwordEditText = findViewById(R.id.password);
         final Button loginButton = findViewById(R.id.login);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
+
+//        unittest
+//        LeancloudDB dbt = new LeancloudDB(getApplication());
+//        dbt.Login("liu", "666666", new LoginCallback() {
+//            @Override
+//            public void Success() {
+//                Toast.makeText(getApplicationContext(),"test",Toast.LENGTH_SHORT).show();
+//                AVUser cur = AVUser.getCurrentUser();
+//                cur.addUnique("booksId_list","iiiiiiiii");
+//                cur.put("new","mewcol");
+//                cur.saveInBackground();
+//            }
+//
+//            @Override
+//            public void Fail() {
+//            }
+//        });
+
+
 
         loginViewModel.getLoginState().observe(this, new Observer<LoginFormState>() {
             @Override

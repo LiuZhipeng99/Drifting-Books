@@ -19,6 +19,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.Random;
 
 import cn.leancloud.AVOSCloud;
 import cn.leancloud.AVObject;
@@ -60,7 +61,9 @@ public class LeancloudDB {
 // 等同于 user.put("username", "Tom")
         user.setUsername(name);
         user.setPassword(password);
-        user.setEmail("tom@qq.example");
+//        user.setEmail("tom@qq.example"); 手机邮箱都不能一样
+        Random genEmail = new Random();
+        user.setEmail(genEmail.nextInt(100000000)+"@example.draftingBooks");
 //        user.setMobilePhoneNumber("+8618200008888");
 // 设置其他属性的方法跟 AVObject 一样
         user.put("imageLink",defaultImageLink);//在更新用户信息里改
@@ -77,7 +80,7 @@ public class LeancloudDB {
             public void onError(@NotNull Throwable throwable) {
                 // 注册失败（通常是因为用户名已被使用）//todo 这里需要提示用户但需要传context/Toast.makeText()或dialog
                 cal.Fail();
-                Log.e("User","用户注册失败（多半已使用）");
+                Log.e("User",throwable.toString());
             }
             public void onComplete() {}
         });
@@ -184,6 +187,7 @@ public class LeancloudDB {
         if (currentUser != null) {
             currentUser.setUsername(name);
             currentUser.put("imageLink",imageLink);
+            Log.d("DB",imageLink);
             currentUser.setEmail(email);
             currentUser.saveInBackground();
         } else {

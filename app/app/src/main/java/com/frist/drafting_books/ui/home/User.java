@@ -1,6 +1,8 @@
 package com.frist.drafting_books.ui.home;
 
 import android.annotation.SuppressLint;
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -20,6 +22,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.frist.drafting_books.DB.LeancloudDB;
+import com.frist.drafting_books.MainActivity;
 import com.frist.drafting_books.R;
 import com.wildma.pictureselector.PictureBean;
 import com.wildma.pictureselector.PictureSelector;
@@ -36,7 +39,7 @@ import io.reactivex.disposables.Disposable;
 public class User extends AppCompatActivity {
     private PictureBean pictureBean;
     private ImageView head;
-    private Button about,bug;
+    private Button about,bug,exit;
     private EditText editname,editpassword,editbookroom,editaddress;
 
     @Override
@@ -57,6 +60,7 @@ public class User extends AppCompatActivity {
         }
         about=findViewById(R.id.about);
         bug= findViewById(R.id.bug);
+        exit = findViewById(R.id.exist);
 //一样也要初始化user的UI
         editname.setText(AVUser.getCurrentUser().getUsername());
         editpassword.setText(AVUser.getCurrentUser().getPassword());
@@ -66,6 +70,19 @@ public class User extends AppCompatActivity {
                 .load(AVUser.getCurrentUser().get("imageLink"))
                 .apply(RequestOptions.bitmapTransform(new CircleCrop())).into(head);
 
+        exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Intent intent = new Intent();
+//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                startActivity(intent);
+//                ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+                Intent i = getBaseContext().getPackageManager()
+                        .getLaunchIntentForPackage(getBaseContext().getPackageName());
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
+            }
+        });
 
         about.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,7 +129,6 @@ public class User extends AppCompatActivity {
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         getMenuInflater().inflate(R.menu.user,menu);
         return super.onCreateOptionsMenu(menu);
     }
@@ -125,13 +141,14 @@ public class User extends AppCompatActivity {
                 return true;
             case R.id.action_save:
 //                鹏包加函数
+//                Toast.makeText(getApplicationContext(), "You click save button!", Toast.LENGTH_LONG).show();
                 Log.d("test", "进入save");
                 if (!editpassword.getText().toString().equals("")) {
                     LeancloudDB db = LeancloudDB.getInstance();
                     db.updatePassword(editpassword.getText().toString());
-                    Toast.makeText(getApplicationContext(), "You have saved!", Toast.LENGTH_LONG);
+                    Toast.makeText(getApplicationContext(), "You have changed password!", Toast.LENGTH_LONG).show();
                 }
-                if (!editname.getText().toString().equals("")) {
+                if (!editname.getText().toString().equals("")&&pictureBean!=null) {
                     LeancloudDB db = LeancloudDB.getInstance();
                     Log.d("testpic", pictureBean.getPath().toString());//形如content://media/external/images/media/2075055
                     try {
@@ -143,13 +160,8 @@ public class User extends AppCompatActivity {
                             public void onNext(AVFile file) {
                                 System.out.println("文件保存完成。objectId：" + file.getObjectId() + " URL:" + file.getUrl());
                                 String pw = editbookroom.getText().toString();
-                                if (pictureBean != null) {
-                                    db.updateUser(editname.getText().toString(), editbookroom.getText().toString(), file.getUrl());
-                                    Toast.makeText(getApplicationContext(), "You have saved!", Toast.LENGTH_LONG);
-                                } else {
-                                    db.updateUser(editname.getText().toString(), editbookroom.getText().toString());
-                                    Toast.makeText(getApplicationContext(), "You have saved!", Toast.LENGTH_LONG);
-                                }
+                                db.updateUser(editname.getText().toString(), editbookroom.getText().toString(),file.getUrl());
+                                Toast.makeText(getApplicationContext(), "You have saved!", Toast.LENGTH_LONG);
                             }
 
                             public void onError(Throwable throwable) {
@@ -162,8 +174,12 @@ public class User extends AppCompatActivity {
                     } catch (FileNotFoundException e) {
                         Toast.makeText(getApplicationContext(), "文件上传失败(Please choose a picture)", Toast.LENGTH_LONG);
                     }
-                    return true;
+                }else if(!editname.getText().toString().equals("")) {
+                    LeancloudDB db = LeancloudDB.getInstance();
+                    db.updateUser(editname.getText().toString(), editbookroom.getText().toString());
+                    Toast.makeText(getApplicationContext(), "Your information has saved!", Toast.LENGTH_LONG).show();
                 }
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
