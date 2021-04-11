@@ -1,12 +1,12 @@
 
 
-The course design APP, a book floating and lending tool, aims to share books.
+The course design APP, a book floating and lending tool, aims to share books and show your bookroom.
 
 ## Preview
 
+![](http://qiniu.lifelover.top/touxiangfff.jpg)![](https://cdn.jsdelivr.net/gh/kivid/Pics/img/QQ图片20210411232028.png)![](https://cdn.jsdelivr.net/gh/kivid/Pics/img/3.png)![](https://cdn.jsdelivr.net/gh/kivid/Pics/img/4.png)![](https://cdn.jsdelivr.net/gh/kivid/Pics/img/5.png)
 
-
-![](https://cdn.jsdelivr.net/gh/kivid/Pics/img/[8NV4_1DQ}C~IG`MS59@TGT.png)
+![](https://cdn.jsdelivr.net/gh/kivid/Pics/img/[8NV4_1DQ}C~IG`MS59@TGT.png)![](https://cdn.jsdelivr.net/gh/kivid/Pics/img/7.png)![](https://cdn.jsdelivr.net/gh/kivid/Pics/img/8.png)
 
 ## Development Technology
 
