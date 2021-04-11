@@ -1,10 +1,12 @@
 package com.frist.drafting_books.ui.community;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
@@ -39,7 +41,10 @@ public class Form extends AppCompatActivity {
     private EditText time_start,time_end;
     private TextView owner_id;
     private ImageView book_img;
+    private AlertDialog.Builder builder;
     String email_text = "Default Message";
+
+    private static final String TAG = "Form";
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,9 +111,36 @@ public class Form extends AppCompatActivity {
                 Map<String,String> email = new HashMap<>();
                 Bundle data = getIntent().getExtras();
                 email.put("to", (String) data.get("to"));
-                email_text = "Request user:"+((TextView)findViewById(R.id.name_edit)).getText().toString()+"\nPhone:"+((TextView)findViewById(R.id.contact_edit)).getText().toString()+"\nAddress:"+((TextView)findViewById(R.id.address_edit)).getText().toString()+"\nLeave message:"+((TextView)findViewById(R.id.leavemessage_edit)).getText().toString();
-                email.put("text",email_text);
-                sendEmail_kit(email);
+                Log.d(TAG, "onOptionsItemSelected: "+((TextView)findViewById(R.id.name_edit)).getText().equals(""));
+                Log.d(TAG, "onOptionsItemSelected: "+((TextView)findViewById(R.id.contact_edit)).getText().equals(""));
+                if((!((TextView)findViewById(R.id.name_edit)).getText().toString().equals(""))&&(!((TextView)findViewById(R.id.contact_edit)).getText().toString().equals(""))){
+                    email_text = "Request user:"+((TextView)findViewById(R.id.name_edit)).getText().toString()+
+                            "\nPhone:"+((TextView)findViewById(R.id.contact_edit)).getText().toString()+
+                            "\nAddress:"+((TextView)findViewById(R.id.address_edit)).getText().toString()+
+                            "\nLeave message:"+((TextView)findViewById(R.id.leavemessage_edit)).getText().toString();
+                    email.put("text",email_text);
+                    sendEmail_kit(email);
+                    builder=new AlertDialog.Builder(this).setTitle("邮件发送提醒").setMessage("邮件已发送，注意关注邮箱。").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            //ToDo: 你想做的事情
+//                        Toast.makeText(Form.this, "确定按钮", Toast.LENGTH_LONG).show();
+                            Form.this.finish();
+                        }
+                    });
+                    builder.create().show();
+                }else {
+                    builder=new AlertDialog.Builder(this).setTitle("内容提醒").setMessage("姓名与联系方式不能为空。").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            //ToDo: 你想做的事情
+//                        Toast.makeText(Form.this, "确定按钮", Toast.LENGTH_LONG).show();
+
+                        }
+                    });
+                    builder.create().show();
+                }
+
                 return true;
         }
         return super.onOptionsItemSelected(item);

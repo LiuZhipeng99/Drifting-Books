@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -164,8 +166,11 @@ public class BlankFragment extends Fragment {
                 ptrFrameLayout.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(getContext(), "刷新结束", Toast.LENGTH_SHORT).show();
+
                         //完成加载，隐藏布局
+                        NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+                        navController.navigate(R.id.navigation_community);
+                        Toast.makeText(getContext(), "刷新结束", Toast.LENGTH_SHORT).show();
                         ptrFrameLayout.refreshComplete();
                     }
                 },1000);
@@ -177,6 +182,8 @@ public class BlankFragment extends Fragment {
                 ptrFrameLayout.postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+                        navController.navigate(R.id.navigation_community);
                         Toast.makeText(getContext(), "加载结束", Toast.LENGTH_SHORT).show();
                         //结束刷新，隐藏布局
                         ptrFrameLayout.refreshComplete();
