@@ -32,15 +32,21 @@ public class MainActivity extends AppCompatActivity {
     private MainActivity self;
     @SuppressLint("StaticFieldLeak")
     private static Context main_ctx;
+    @SuppressLint("StaticFieldLeak")
+    private static MainActivity mainActivity;
 
     public synchronized static Context getMain_ctx() { //不能设置为静态会内存泄漏/应不应该设定为synchronized
         return main_ctx;
+    }
+    public synchronized static MainActivity getMain() { //不能设置为静态会内存泄漏/应不应该设定为synchronized
+        return mainActivity;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         main_ctx = getApplication();
+        mainActivity = this;
 //        LeanConfig.initAVOSCloud(true); //改到DB的实例方法里（懒加载）
 //        先进入login
 //        Intent logina = new Intent(this, LoginActivity.class);
