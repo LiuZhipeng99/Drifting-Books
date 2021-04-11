@@ -125,28 +125,45 @@ public class User extends AppCompatActivity {
                 return true;
             case R.id.action_save:
 //                鹏包加函数
-                Log.d("test","进入save");
-                if(!editpassword.getText().toString().equals("") && !editname.getText().toString().equals("") &&pictureBean!=null){
+                Log.d("test", "进入save");
+                if (!editpassword.getText().toString().equals("")) {
+                    LeancloudDB db = LeancloudDB.getInstance();
+                    db.updatePassword(editpassword.getText().toString());
+                    Toast.makeText(getApplicationContext(), "You have saved!", Toast.LENGTH_LONG);
+                }
+                if (!editname.getText().toString().equals("")) {
                     LeancloudDB db = LeancloudDB.getInstance();
                     Log.d("testpic", pictureBean.getPath().toString());//形如content://media/external/images/media/2075055
                     try {
-                        AVFile file = AVFile.withAbsoluteLocalPath(AVUser.getCurrentUser().getUsername() +"'avatar.jpg", pictureBean.getPath());
+                        AVFile file = AVFile.withAbsoluteLocalPath(AVUser.getCurrentUser().getUsername() + "'avatar.jpg", pictureBean.getPath());
                         file.saveInBackground().subscribe(new Observer<AVFile>() {
-                            public void onSubscribe(Disposable disposable) {}
+                            public void onSubscribe(Disposable disposable) {
+                            }
+
                             public void onNext(AVFile file) {
-                                System.out.println("文件保存完成。objectId：" + file.getObjectId()+" URL:"+file.getUrl());
-                                db.updateUser(editname.getText().toString(),editbookroom.getText().toString(),editpassword.getText().toString(),file.getUrl());;
+                                System.out.println("文件保存完成。objectId：" + file.getObjectId() + " URL:" + file.getUrl());
+                                String pw = editbookroom.getText().toString();
+                                if (pictureBean != null) {
+                                    db.updateUser(editname.getText().toString(), editbookroom.getText().toString(), file.getUrl());
+                                    Toast.makeText(getApplicationContext(), "You have saved!", Toast.LENGTH_LONG);
+                                } else {
+                                    db.updateUser(editname.getText().toString(), editbookroom.getText().toString());
+                                    Toast.makeText(getApplicationContext(), "You have saved!", Toast.LENGTH_LONG);
+                                }
                             }
+
                             public void onError(Throwable throwable) {
-                                // 保存失败，可能是文件无法被读取，或者上传过程中出现问题
+                                Toast.makeText(getApplicationContext(), "Save failed!", Toast.LENGTH_LONG);
                             }
-                            public void onComplete() {}
+
+                            public void onComplete() {
+                            }
                         });
                     } catch (FileNotFoundException e) {
-                        Toast.makeText(getApplicationContext(),"文件上传失败(Please choose a picture)",Toast.LENGTH_LONG);
+                        Toast.makeText(getApplicationContext(), "文件上传失败(Please choose a picture)", Toast.LENGTH_LONG);
                     }
+                    return true;
                 }
-                return true;
         }
         return super.onOptionsItemSelected(item);
     }
