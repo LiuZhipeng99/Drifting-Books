@@ -3,6 +3,8 @@ package com.frist.drafting_books.DB;
 import android.content.Context;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
+
 import com.frist.drafting_books.utils.GetBookFromNetCallback;
 import com.frist.drafting_books.utils.VolleyHelper;
 
@@ -12,7 +14,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 
 import cn.leancloud.AVOSCloud;
@@ -174,12 +179,32 @@ public class LeancloudDB {
 //        currentUser.save();
     }
 
-    public void updateUser(String name,String email,String password,String imageLink){ //todo 同时更新location但是是自动获取而不能手动修改/手机号邮箱目前不加入都是默认
+    public void updateUser(String name,String email,String imageLink){ //todo 同时更新location但是是自动获取而不能手动修改/手机号邮箱目前不加入都是默认
         AVUser currentUser = AVUser.getCurrentUser(); //todo 可以当全局的userid变量的
         if (currentUser != null) {
             currentUser.setUsername(name);
-            currentUser.setPassword(password);
             currentUser.put("imageLink",imageLink);
+            currentUser.setEmail(email);
+            currentUser.saveInBackground();
+        } else {
+            // 显示注册或登录页面
+            Log.d("DB","need sign");
+        }
+    }
+    public void updatePassword(String password) {
+        AVUser currentUser = AVUser.getCurrentUser();
+        if (currentUser != null) {
+            currentUser.setPassword(password);
+            currentUser.saveInBackground();
+        } else {
+            // 显示注册或登录页面
+            Log.d("DB", "need sign");
+        }
+    }
+    public void updateUser(String name,String email){ //todo 同时更新location但是是自动获取而不能手动修改/手机号邮箱目前不加入都是默认
+        AVUser currentUser = AVUser.getCurrentUser(); //todo 可以当全局的userid变量的
+        if (currentUser != null) {
+            currentUser.setUsername(name);
             currentUser.setEmail(email);
             currentUser.saveInBackground();
         } else {
@@ -219,7 +244,8 @@ public class LeancloudDB {
             public void onSubscribe(Disposable disposable) {}
             public void onNext(List<AVObject> arrs) {
                 // students 是包含满足条件的 Student 对象的数组
-                callback.querySuccess(arrs,arrs);
+                List<AVObject> borr = new ArrayList<>();
+                callback.querySuccess(arrs,borr);
             }
             public void onError(Throwable throwable) {}
             public void onComplete() {}
