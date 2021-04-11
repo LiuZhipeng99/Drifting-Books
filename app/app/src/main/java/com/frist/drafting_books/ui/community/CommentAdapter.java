@@ -15,6 +15,7 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.frist.drafting_books.R;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 

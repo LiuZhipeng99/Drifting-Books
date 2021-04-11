@@ -74,6 +74,7 @@ public class Comment extends AppCompatActivity {
 
             @Override
             public void queryOneSuccess(AVObject bookoj) {
+                Log.d(TAG, "queryOneSuccess: ");
                 book=bookoj;
                 Gson gs = new Gson();
                 jb =gs.toJsonTree(book.get("book_json")).getAsJsonObject();
@@ -88,13 +89,16 @@ public class Comment extends AppCompatActivity {
                     map.put("comment",commentContent.substring(1,commentContent.length()-1));
                     map.put("headpic",headpic.substring(1,headpic.length()-1));
                     commentList.add(map);
-                    initComment();
+
                 }
+                Log.d(TAG, "queryOneSuccess: "+commentList);
+                initComment();
             }
 
             @Override
             public void queryFail(Error e) {
-
+                Log.d(TAG, "queryFail: ");
+                Toast.makeText(Comment.this,"评论获取失败，或者为空.",Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -136,6 +140,7 @@ public class Comment extends AppCompatActivity {
                     map.put("reader",user.getUsername());
                     map.put("comment",replyContent);
                     map.put("headpic",user.get("imageLink").toString());
+                    Log.d(TAG, "onClick: "+map);
                     adapter.addTheReplyData(map);
                     Toast.makeText(Comment.this,"回复成功",Toast.LENGTH_SHORT).show();
                 }else {
